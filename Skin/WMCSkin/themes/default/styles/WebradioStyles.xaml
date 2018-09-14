@@ -3,9 +3,94 @@
   xmlns="www.team-mediaportal.com/2008/mpf/directx"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:collections="clr-namespace:MediaPortal.UI.Presentation.DataObjects;assembly=MediaPortal.UI"
+  xmlns:mp_special_controls="clr-namespace:MediaPortal.UI.SkinEngine.SpecialElements.Controls;assembly=SkinEngine"
   xmlns:wrh="clr-namespace:Webradio.Models"
   DependsOnStyleResources="Buttons,Colors,Consts">
 
+  <Style x:Key="PrimaryWebRadioOSDStyle" TargetType="{x:Type mp_special_controls:PlayerControl}">
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type mp_special_controls:PlayerControl}">
+          <ControlTemplate.Resources>
+            <Model x:Key="AudioPlayerModel" Id="D8998340-DA2D-42be-A29B-6D7A72AEA2DC"/>
+          </ControlTemplate.Resources>
+
+          <Control Style="{ThemeResource OSDAudioContainer}" DataContext="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+                   Margin="10,0,10,10" HorizontalAlignment="Stretch">
+            <Control.Resources>
+              <ControlTemplate x:Key="OSD_InfoArea_Template">
+
+                <Grid x:Name="PlayerGrid" Margin="5,0,5,0"
+                      HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                  </Grid.ColumnDefinitions>
+                  <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                  </Grid.RowDefinitions>
+                </Grid>
+              </ControlTemplate>
+
+              <ControlTemplate x:Key="OSD_Controls_Template">
+                <DockPanel Margin="0" HorizontalAlignment="Right">
+                  <Grid DockPanel.Dock="Right">
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="10"/>
+                      <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                      <RowDefinition Height="Auto"/>
+                      <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel x:Name="PlayControlsPanel" Orientation="Horizontal" Grid.Column="1" Grid.Row="1" Margin="0"
+                                VerticalAlignment="Center" HorizontalAlignment="Right">
+                      <StackPanel.LayoutTransform>
+                        <TransformGroup>
+                          <ScaleTransform ScaleX="1.3" ScaleY="1.3"/>
+                        </TransformGroup>
+                      </StackPanel.LayoutTransform>
+
+                      <Button x:Name="StopButton" Style="{ThemeResource StopButtonStyle}" Margin="0" IsVisible="{Binding CanStop}"
+                              Command="{Command Stop}"/>
+                      <Button x:Name="SkipBackButton" Style="{ThemeResource SkipBackButtonStyle}" Margin="0" IsVisible="{Binding CanSkipBack}"
+                              Command="{Command Previous}"/>
+                      <Button x:Name="RewindButton" Style="{ThemeResource RewindButtonStyle}" Margin="0" IsVisible="{Binding CanSeekBackward}"
+                              Command="{Command SeekBackward}"/>
+                      <Button x:Name="PlayButton" Style="{ThemeResource PlayButtonStyle}" Margin="5,0,5,0" IsVisible="{Binding CanPlay}"
+                              Command="{Command Play}"/>
+                      <Button x:Name="PauseButton" Style="{ThemeResource PauseButtonStyle}" Margin="5,0,5,0" IsVisible="{Binding CanPause}"
+                              Command="{Command Pause}"/>
+                      <Button x:Name="ForwardButton" Style="{ThemeResource ForwardButtonStyle}" Margin="0" IsVisible="{Binding CanSeekForward}"
+                              Command="{Command SeekForward}"/>
+                      <Button x:Name="SkipForwardButton" Style="{ThemeResource SkipForwardButtonStyle}" Margin="0" IsVisible="{Binding CanSkipForward}"
+                              Command="{Command Next}"/>
+                      <Image Source="PlayerControl\DIVIDER.PNG" Height="35" Stretch="Uniform" VerticalAlignment="Center" Margin="3,0,3,0"/>
+                      <Button x:Name="AudioActiveButton" Style="{ThemeResource AudioActiveButtonStyle}" Margin="0"
+                              Command="{Command AudioButtonPressed}" IsVisible="{Binding IsAudio}"/>
+                      <Button x:Name="AudioInactiveButton" Style="{ThemeResource AudioInactiveButtonStyle}" Margin="0"
+                              Command="{Command AudioButtonPressed}" IsVisible="{Binding !IsAudio}" />
+                      <Button x:Name="VolumeDownButton" Style="{ThemeResource VolumeDownButtonStyle}" Margin="0"
+                              Command="{Command Source={StaticResource GeneralPlayerModel},Path=VolumeDown}"/>
+                      <Button x:Name="VolumeUpButton" Style="{ThemeResource VolumeUpButtonStyle}" Margin="0"
+                              Command="{Command Source={StaticResource GeneralPlayerModel},Path=VolumeUp}"/>
+                    </StackPanel>
+                    <!-- PlayControlsPanel -->
+                  </Grid>
+                  <!-- PlayerGrid -->
+                </DockPanel>
+              </ControlTemplate>
+            </Control.Resources>
+          </Control>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+    <Setter Property="PlayerContext" Value="PrimaryPlayer"/>
+  </Style>
+  
   <!-- A data template which shows an image and the Name of the ListItem -->
   <DataTemplate x:Key="WebradioFilterItemDataTemplate" DataType="{x:Type collections:ListItem}">
     <DockPanel x:Name="ItemControl" LastChildFill="False">
