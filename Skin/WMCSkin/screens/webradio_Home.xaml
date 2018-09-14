@@ -77,10 +77,10 @@
 
           <Grid x:Name="RightPanel" Margin="0,80,-650,-80" VerticalAlignment="Stretch"
               Width="650" HorizontalAlignment="Right">
-            <Grid.IsVisible>
+            <!--Grid.IsVisible>
               <Binding Source="{StaticResource ViewModeModel}" Path="LayoutType"
                      Converter="{StaticResource ExpressionValueConverter}" ConverterParameter="{}{0} == {LayoutType}.{ListLayout}"/>
-            </Grid.IsVisible>
+            </Grid.IsVisible-->
             <Grid.Resources>
               <Storyboard x:Key="SlideInStoryboard" FillBehavior="HoldEnd">
                 <ObjectAnimationUsingKeyFrames BeginTime="00:00:00" FillBehavior="HoldEnd" Storyboard.TargetName="FadeBackground" Storyboard.TargetProperty="IsVisible">
