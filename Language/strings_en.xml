@@ -15,6 +15,7 @@
 	<string name="Webradio.Home.Country">Country</string>
 	<string name="Webradio.Home.City">City</string>
 	<string name="Webradio.Home.Language">Language</string>
+  
 	<string name="Webradio.Settings.ScreenTitle">Settings</string>
 	<string name="Webradio.Settings.Menu.Filter">Filter</string>
 	<string name="Webradio.Settings.Menu.Favorites">Favorites</string>
@@ -28,12 +29,14 @@
 	<string name="Webradio.Settings.Online">Version Online</string>
 	<string name="Webradio.Settings.Offline">Version Offline</string>
 	<string name="Webradio.Settings.Version">Version</string>
+  
 	<string name="Webradio.Favorites.ScreenTitle">Favorites</string>
 	<string name="Webradio.Favorites.Helptext">Manage your Favorites</string>
 	<string name="Webradio.Favorites.Add">Add</string>
 	<string name="Webradio.Favorites.Delete">Delete</string>
 	<string name="Webradio.Favorites.Rename">Rename</string>
 	<string name="Webradio.Favorites.Save">Save</string>
+  
 	<string name="Webradio.Filter.ScreenTitle">Filter</string>
 	<string name="Webradio.Filter.Helptext">Manage your Filters</string>
 	<string name="Webradio.Filter.Delete">Delete</string>
@@ -45,6 +48,7 @@
 	<string name="Webradio.Filter.StreamUrls[0].Bitrate">Bitrate</string>
 	<string name="Webradio.Filter.Country">Country</string>
 	<string name="Webradio.Filter.City">City</string>
+  
 	<string name="Webradio.Dialog.ShowFilter.Header">Show Filter</string>
 	<string name="Webradio.Dialog.ShowFilter.ShowFilter">Show My Filter</string>
 	<string name="Webradio.Dialog.ShowFilter.Country">Country</string>
@@ -69,7 +73,9 @@
 	<string name="Webradio.Dialog.LoadUpdate.DownloadError">Download Error</string>
 	<string name="Webradio.Dialog.LoadUpdate.Button">Start Update</string>
 	<string name="Webradio.UIContributor.Listeners">Listeners:</string>
-	<string name="Language.aa">Afar</string>
+  <string name="Webradio.UIContributor.Album">Album:</string>
+  
+  <string name="Language.aa">Afar</string>
 	<string name="Language.ab">Abkhazian</string>
 	<string name="Language.ace">Achinese</string>
 	<string name="Language.ach">Acoli</string>

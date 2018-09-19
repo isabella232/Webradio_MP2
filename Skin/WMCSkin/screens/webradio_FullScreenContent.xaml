@@ -65,15 +65,17 @@
               <RowDefinition Height="Auto"/>
               <RowDefinition Height="Auto"/>
               <RowDefinition Height="Auto"/>
+              <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
               <ColumnDefinition Width="300"/>
+              <ColumnDefinition Width="*"/>
               <ColumnDefinition Width="Auto"/>
               <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
             <!--Logo-->
-            <StackPanel Grid.RowSpan="4">
+            <StackPanel Grid.RowSpan="5">
               <Canvas Height="250" Width="250" Background="#00000000">
                 <Rectangle Height="250" Width="250" RadiusY="25" RadiusX="25" Stroke="Black">
                   <Rectangle.Fill>
@@ -98,18 +100,36 @@
               </Canvas>
             </StackPanel>
 
-            <Label x:Name="ArtistsLabel" Grid.Row="1" Grid.Column="1" VerticalAlignment="Bottom"
-                Content="[Media.AudioArtistsLabel]" Color="{ThemeResource TextColor}" FontSize="{ThemeResource BigFontSize}"/>
-            <Label x:Name="Artists" Grid.Row="1" Grid.Column="2" VerticalAlignment="Bottom"
-                Content="{Binding Source={StaticResource Model}, Path=PlayerUIContributor.Artist}" Color="{ThemeResource TextColor}" FontSize="{ThemeResource BigFontSize}"/>
-            <Label x:Name="TitleLabel" Grid.Row="2" Grid.Column="1"
-                Content="[Media.AudioTitleLabel]" Color="{ThemeResource TextColor}" FontSize="{ThemeResource BigFontSize}"/>
-            <Label x:Name="Title" Grid.Row="2" Grid.Column="2" Scroll="Auto"
-                Content="{Binding Source={StaticResource Model}, Path=PlayerUIContributor.Title}" Color="{ThemeResource TextColor}" FontSize="{ThemeResource BigFontSize}"/>
-            <Label x:Name="ListenersLabel" Grid.Row="3" Grid.Column="1"
-                Content="[Webradio.UIContributor.Listeners]" Color="{ThemeResource TextColor}" FontSize="{ThemeResource BigFontSize}"/>
-            <Label x:Name="Listeners" Grid.Row="3" Grid.Column="2" Scroll="Auto"
-                Content="{Binding Source={StaticResource Model}, Path=PlayerUIContributor.Listeners}" Color="{ThemeResource TextColor}" FontSize="{ThemeResource BigFontSize}"/>
+            <Label x:Name="StreamTitle" Grid.Row="0" Grid.Column="1" Scroll="Auto" FontFamily="SegoeUIBold" FontSize="{ThemeResource BigFontSize}"
+                   Content="{Binding Source={StaticResource Model}, Path=PlayerUIContributor.CurrentStreamTitle}" Color="{ThemeResource TextColor}"/>
+                  <Label x:Name="Genre" Grid.Row="1" Grid.Column="1" Scroll="Auto" FontSize="{ThemeResource BigFontSize}"
+                   Content="{Binding Source={StaticResource Model}, Path=PlayerUIContributor.CurrentStreamGenres}" Color="{ThemeResource TextColor}" />  
+            <Label x:Name="City" Grid.Row="2" Grid.Column="1" Scroll="Auto" FontSize="{ThemeResource BigFontSize}"
+                   Content="{Binding Source={StaticResource Model}, Path=PlayerUIContributor.CurrentStreamCity}" Color="{ThemeResource TextColor}"/>  
+            <Label x:Name="Country" Grid.Row="3" Grid.Column="1" Scroll="Auto" FontSize="{ThemeResource BigFontSize}"
+                   Content="{Binding Source={StaticResource Model}, Path=PlayerUIContributor.CurrentStreamCountry}" Color="{ThemeResource TextColor}"/>
+            <Image Grid.Row="4" Grid.Column="1" Margin="0,5,0,0" Stretch="Uniform" Height="40" HorizontalAlignment="Left" VerticalAlignment="Top">
+              <Image.Source>
+                <Binding Source="{StaticResource Model}" Path="PlayerUIContributor.CurrentStreamLanguageCode" Converter="{StaticResource StringFormatConverter}" ConverterParameter="{}LanguageFlags\{0}.png"/> 
+              </Image.Source>
+            </Image>
+
+            <Label x:Name="TitleLabel" Grid.Row="0" Grid.Column="2" 
+                   Content="[Media.AudioTitleLabel]" Color="{ThemeResource TextColor}" FontSize="{ThemeResource BigFontSize}"/>
+            <Label x:Name="Title" Grid.Row="0" Grid.Column="3" Scroll="Auto" 
+                   Content="{Binding Source={StaticResource Model}, Path=PlayerUIContributor.Title}" Color="{ThemeResource TextColor}" FontSize="{ThemeResource BigFontSize}"/>
+            <Label x:Name="ArtistsLabel" Grid.Row="1" Grid.Column="2" VerticalAlignment="Bottom"
+                   Content="[Media.AudioArtistsLabel]" Color="{ThemeResource TextColor}" FontSize="{ThemeResource BigFontSize}"/>
+            <Label x:Name="Artists" Grid.Row="1" Grid.Column="3" VerticalAlignment="Bottom"
+                   Content="{Binding Source={StaticResource Model}, Path=PlayerUIContributor.Artist}" Color="{ThemeResource TextColor}" FontSize="{ThemeResource BigFontSize}"/>
+            <Label x:Name="ListenersLabel" Grid.Row="2" Grid.Column="2"
+                   Content="[Webradio.UIContributor.Listeners]" Color="{ThemeResource TextColor}" FontSize="{ThemeResource BigFontSize}"/>
+            <Label x:Name="Listeners" Grid.Row="2" Grid.Column="3" Scroll="Auto"
+                   Content="{Binding Source={StaticResource Model}, Path=PlayerUIContributor.Listeners}" Color="{ThemeResource TextColor}" FontSize="{ThemeResource BigFontSize}"/>
+            <Label x:Name="AlbumLabel" Grid.Row="3" Grid.Column="2"
+                   Content="[Webradio.UIContributor.Album]" Color="{ThemeResource TextColor}" FontSize="{ThemeResource BigFontSize}"/>
+            <Label x:Name="Album" Grid.Row="3" Grid.Column="3" Scroll="Auto"
+                   Content="{Binding Source={StaticResource Model}, Path=PlayerUIContributor.Album}" Color="{ThemeResource TextColor}" FontSize="{ThemeResource BigFontSize}"/>
             
           </Grid>
 
