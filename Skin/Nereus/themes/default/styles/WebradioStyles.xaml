@@ -7,6 +7,10 @@
   xmlns:mp_special_controls="clr-namespace:MediaPortal.UI.SkinEngine.SpecialElements.Controls;assembly=SkinEngine"
   DependsOnStyleResources="Buttons,Colors,Consts">
 
+  <!-- ################################################################# -->
+  <!-- ###################   WEB RADIO OSD   ########################### -->
+  <!-- ################################################################# -->
+    
   <Style x:Key="OSDWebRadioContainer" TargetType="{x:Type Control}">
     <Setter Property="Template">
       <Setter.Value>
@@ -100,7 +104,11 @@
     <Setter Property="PlayerContext" Value="PrimaryPlayer"/>
   </Style>
 
-
+  <!-- ################################################################# -->
+  <!-- ################   WEB RADIO OTHER STYLES   ##################### -->
+  <!-- ################################################################# -->
+  
+  
   <!-- A data template which shows an image and the Name of the ListItem -->
   <DataTemplate x:Key="WebradioFilterItemDataTemplate" DataType="{x:Type collections:ListItem}">
     <DockPanel x:Name="ItemControl" LastChildFill="False">
@@ -149,7 +157,11 @@
     </Setter>
   </Style>
 
-  <Style x:Key="WebRadioItemContainerStyle" BasedOn="{ThemeResource DefaultItemContainerStyle}">
+  <!-- ################################################################# -->
+  <!-- ################   WEB RADIO VIEW STYLES   ###################### -->
+  <!-- ################################################################# -->
+    
+  <Style x:Key="WebRadioListItemContainerStyle" BasedOn="{ThemeResource DefaultItemContainerStyle}">
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type ListViewItem}">
@@ -168,8 +180,28 @@
       </Setter.Value>
     </Setter>
   </Style>
+  
+  <Style x:Key="WebRadioGridItemContainerStyle" BasedOn="{ThemeResource DefaultItemContainerStyle}">
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type ListViewItem}">
+          <Button Style="{ThemeResource ButtonWideStyle_Grid}" Margin="0,0,0,0"
+                  Command="{DynamicResource ResourceKey=Menu_Command}"
+                  IsEnabled="{Binding Enabled}" SetFocus="{Binding Path=Selected,Mode=OneTime}">
+            <Button.Triggers>
+              <Trigger Property="HasFocus" Value="True">
+                <Setter TargetName="ItemLabel" Property="Color" Value="{ThemeResource TextColor}"/>
+                <Setter TargetName="ItemLabel" Property="Scroll" Value="Auto"/>
+                <Setter Property="StackPanel.ZIndex" Value="100.0"/>
+              </Trigger>
+            </Button.Triggers>
+          </Button>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
 
-  <DataTemplate x:Key="WebRadioItemDataTemplate" DataType="{x:Type collections:ListItem}">
+  <DataTemplate x:Key="WebRadioListItemDataTemplate" DataType="{x:Type collections:ListItem}">
     <DockPanel x:Name="ItemControl" LastChildFill="False">
       <Image DockPanel.Dock="Right" Margin="0,0,14,0" Stretch="Uniform" Height="34" >
         <Image.Source>
@@ -208,34 +240,107 @@
     </DockPanel>
   </DataTemplate>
   
+  <DataTemplate x:Key="WebRadioGridItemDataTemplate" DataType="{x:Type collections:ListItem}">
+    <DockPanel x:Name="ItemControl" LastChildFill="False" Margin="2"
+               Width="{StaticResource THUMBNAIL_GRID_WIDTH}" Height="{StaticResource THUMBNAIL_GRID_HEIGHT}">
+      
+      <Image DockPanel.Dock="Center" Source="Thumbnail_medium.png" Stretch="Fill" Margin="-6"/>
+      <Rectangle DockPanel.Dock="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Rectangle.Fill>
+          <MultiBinding Converter="{StaticResource ExpressionMultiValueConverter}" ConverterParameter="{}{0} ? {1} : {2}">
+            <Binding RelativeSource="{RelativeSource Mode=FindAncestor,AncestorType={x:Type Button}}" Path="HasFocus"/>
+            <Binding Source="{ThemeResource NereusColorLight}"/>
+            <Binding Source="{ThemeResource NereusColorMedium}"/>
+          </MultiBinding>
+        </Rectangle.Fill>
+      </Rectangle>
+        
+      <Image DockPanel.Dock="Top" Margin="0,10,10,0" Stretch="Uniform" Height="34" HorizontalAlignment="Right">
+        <Image.Source>
+          <Binding Path="[CountryCode]" Converter="{StaticResource StringFormatConverter}" ConverterParameter="{}LanguageFlags\{0}.png"/>
+        </Image.Source>
+      </Image>
+
+      <Grid DockPanel.Dock="Left" Height="100" Width="100" Margin="10,-30,0,0">
+      <Rectangle Height="100" Width="100" StrokeThickness="0" RadiusX="15" RadiusY="15"
+                 VerticalAlignment="Center" HorizontalAlignment="Center" >
+        <Rectangle.Fill>
+          <ImageBrush ImageSource="{Binding [ImageSrc]}" /> 
+        </Rectangle.Fill>
+      </Rectangle>
+      <!-- Necessary hack retouching dirty image borders due to missing crop parameter in MPF -->
+      <Rectangle Height="98" Width="98" StrokeThickness="2" RadiusX="15" RadiusY="15"
+                 VerticalAlignment="Center" HorizontalAlignment="Center">
+        <Rectangle.Stroke>
+          <MultiBinding Converter="{StaticResource ExpressionMultiValueConverter}" ConverterParameter="{}{0} ? {1} : {2}">
+            <Binding RelativeSource="{RelativeSource Mode=FindAncestor,AncestorType={x:Type Button}}" Path="HasFocus"/>
+            <Binding Source="{ThemeResource NereusColorLight}"/>
+            <Binding Source="{ThemeResource NereusColorMedium}"/>
+          </MultiBinding>
+        </Rectangle.Stroke>
+      </Rectangle>        
+      </Grid>
+               
+      <Label x:Name="ItemLabel" DockPanel.Dock="Right" Content="{Binding [Name]}" Margin="10,0,10,0" Wrap="True"
+             HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="{ThemeResource SmallerFontSize}"
+             Color="{ThemeResource MediaItemUnwatchedColor}" HorizontalContentAlignment="Center"/>
+    
+    </DockPanel>
+  </DataTemplate>
+    
   <Style x:Key="WebRadioListViewStyle" BasedOn="{ThemeResource ContentsMenuListViewStyle}">
-    <Setter Property="ItemTemplate" Value="{ThemeResource WebRadioItemDataTemplate}"/>
     <Setter Property="DataStringProvider" Value="{ThemeResource ContentsMenuItemDataStringProvider}"/>
-    <Setter Property="ItemContainerStyle" Value="{ThemeResource WebRadioItemContainerStyle}"/>
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type ListView}">
-          <ScrollViewer CanContentScroll="True" Margin="0" Style="{ThemeResource VerticalMediaScrollViewerStyle}"
-                        HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled"
-                        HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-            <ItemsPresenter VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+          <ScrollViewer CanContentScroll="True" Margin="0" Style="{ThemeResource VerticalMediaScrollViewerStyle}" 
+               HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled" >
+            <ItemsPresenter VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
           </ScrollViewer>
         </ControlTemplate>
       </Setter.Value>
     </Setter>
+    <BindingSetter Property="ItemTemplate">
+      <BindingSetter.BindingWrapper>
+        <BindingWrapper>
+          <BindingWrapper.Binding>
+            <MultiBinding Converter="{StaticResource ExpressionMultiValueConverter}" ConverterParameter="{}{0} == {LayoutType}.{ListLayout} ? {1} : {2}">
+              <Binding Source="{StaticResource ViewModeModel}" Path="LayoutType"/>
+              <Binding Source="{ThemeResource WebRadioListItemDataTemplate}"/>
+              <Binding Source="{ThemeResource WebRadioGridItemDataTemplate}"/>
+            </MultiBinding>
+          </BindingWrapper.Binding>
+        </BindingWrapper>
+      </BindingSetter.BindingWrapper>
+    </BindingSetter>
+    <BindingSetter Property="ItemContainerStyle">
+      <BindingSetter.BindingWrapper>
+        <BindingWrapper>
+          <BindingWrapper.Binding>
+            <MultiBinding Converter="{StaticResource ExpressionMultiValueConverter}" ConverterParameter="{}{0} == {LayoutType}.{ListLayout} ? {1} : {2}">
+              <Binding Source="{StaticResource ViewModeModel}" Path="LayoutType"/>
+              <Binding Source="{ThemeResource WebRadioListItemContainerStyle}"/>
+              <Binding Source="{ThemeResource WebRadioGridItemContainerStyle}"/>
+            </MultiBinding>
+          </BindingWrapper.Binding>
+        </BindingWrapper>
+      </BindingSetter.BindingWrapper>
+    </BindingSetter>
     <BindingSetter Property="ItemsPanel">
       <BindingSetter.BindingWrapper>
         <BindingWrapper>
           <BindingWrapper.Binding>
+            <MultiBinding Converter="{StaticResource ExpressionMultiValueConverter}" ConverterParameter="{}{0} == {LayoutType}.{ListLayout} ? {1} : {2}">
+              <Binding Source="{StaticResource ViewModeModel}" Path="LayoutType"/>
+              <!-- List layout -->
               <Binding>
                 <Binding.Source>
                   <ItemsPanelTemplate>
-                    <!--VirtualizingStackPanel x:Name="ListItemsHost" IsItemsHost="True"/-->
                     <AnimatedStackPanel x:Name="ListItemsHost" IsItemsHost="True" ScrollMargin="130,130" Margin="0,-10,0,-40">
                       <AnimatedStackPanel.Resources>
                         <Storyboard x:Key="ScrollAnimation" FillBehavior="HoldEnd">
-                          <DoubleAnimation BeginTime="00:00:00" From="0" To="1" Duration="00:00:00.300" FillBehavior="HoldEnd" 
-                                           Storyboard.TargetName="ListItemsHost" Storyboard.TargetProperty="ScrollOffsetMultiplier" />
+                          <DoubleAnimation BeginTime="00:00:00" From="0" To="1" Duration="00:00:00.300" 
+                                           FillBehavior="HoldEnd" Storyboard.TargetName="ListItemsHost" Storyboard.TargetProperty="ScrollOffsetMultiplier" />
                         </Storyboard>
                       </AnimatedStackPanel.Resources>
                       <AnimatedStackPanel.Triggers>
@@ -249,6 +354,29 @@
                   </ItemsPanelTemplate>
                 </Binding.Source>
               </Binding>
+              <!-- Grid layout -->
+              <Binding>
+                <Binding.Source>
+                  <ItemsPanelTemplate>
+                    <AnimatedWrapPanel x:Name="GridItemsHost" IsItemsHost="True" Orientation="Horizontal" ScrollMargin="400,400" Margin="50,-270,0,-305">
+                      <AnimatedWrapPanel.Resources>
+                        <Storyboard x:Key="ScrollAnimation" FillBehavior="HoldEnd">
+                          <DoubleAnimation BeginTime="00:00:00" From="0" To="1" Duration="00:00:00.400" 
+                                           FillBehavior="HoldEnd" Storyboard.TargetName="GridItemsHost" Storyboard.TargetProperty="ScrollOffsetMultiplier" />
+                        </Storyboard>
+                      </AnimatedWrapPanel.Resources>
+                      <AnimatedWrapPanel.Triggers>
+                        <EventTrigger RoutedEvent="AnimatedWrapPanel.Scroll">
+                          <EventTrigger.Actions>
+                            <BeginStoryboard Storyboard="{ThemeResource ScrollAnimation}"/>
+                          </EventTrigger.Actions>
+                        </EventTrigger>
+                      </AnimatedWrapPanel.Triggers>
+                    </AnimatedWrapPanel>
+                  </ItemsPanelTemplate>
+                </Binding.Source>
+              </Binding>
+            </MultiBinding>
           </BindingWrapper.Binding>
         </BindingWrapper>
       </BindingSetter.BindingWrapper>
