@@ -185,27 +185,54 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Skin\default\screens\webradio_dialogImportFilter.xaml" />
+    <Content Include="Skin\default\screens\webradio_dialogImportFilter.xaml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Skin\default\screens\webradio_dialogFavorites.xaml">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Skin\default\screens\webradio_Filter.xaml" />
-    <Content Include="Skin\default\screens\webradio_Home.xaml" />
-    <Content Include="Skin\default\screens\webradio_Settings.xaml" />
+    <Content Include="Skin\default\screens\webradio_Filter.xaml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Skin\default\screens\webradio_Home.xaml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Skin\default\screens\webradio_Settings.xaml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Skin\default\themes\default\styles\WebradioStyles.xaml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Skin\Nereus\images\webradiobackground.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Skin\Titanium\screens\webradio_FullscreenContent.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Skin\WMCSkin\images\TopMenu\36fa3773-8428-4e0c-be5b-4ecff5a5e11f.png" />
-    <Content Include="Skin\WMCSkin\images\TopMenu\56694dc2-041e-4d93-ad52-747d3394eb52.png" />
-    <Content Include="Skin\WMCSkin\images\TopMenu\76a060df-0379-431d-a497-ab49b7c37f4e.png" />
-    <Content Include="Skin\WMCSkin\images\TopMenu\985ad907-0edb-4feb-aa99-2b52ddeade6f.png" />
-    <Content Include="Skin\WMCSkin\images\TopMenu\9c3e6701-6856-49ec-a4cd-0ceb15f385f6.png" />
-    <Content Include="Skin\WMCSkin\images\TopMenu\bc74d4a5-d533-41b5-9d1f-d1a0918f51b7.png" />
-    <Content Include="Skin\WMCSkin\images\TopMenu\d83604c0-0936-4416-9de8-7b6d7c50023c.png" />
+    <Content Include="Skin\WMCSkin\images\TopMenu\36fa3773-8428-4e0c-be5b-4ecff5a5e11f.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Skin\WMCSkin\images\TopMenu\56694dc2-041e-4d93-ad52-747d3394eb52.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Skin\WMCSkin\images\TopMenu\76a060df-0379-431d-a497-ab49b7c37f4e.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Skin\WMCSkin\images\TopMenu\985ad907-0edb-4feb-aa99-2b52ddeade6f.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Skin\WMCSkin\images\TopMenu\9c3e6701-6856-49ec-a4cd-0ceb15f385f6.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Skin\WMCSkin\images\TopMenu\bc74d4a5-d533-41b5-9d1f-d1a0918f51b7.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Skin\WMCSkin\images\TopMenu\d83604c0-0936-4416-9de8-7b6d7c50023c.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -214,118 +241,149 @@
   <ItemGroup>
     <Content Include="Skin\default\screens\webradio_dialogSearchInStreams.xaml">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Skin\default\screens\webradio_dialogShowFavorites.xaml">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Skin\default\screens\webradio_dialogShowFilter.xaml">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Skin\default\screens\webradio_dialogDeleteFilter.xaml">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Skin\default\screens\webradio_CurrentlyPlaying.xaml">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Skin\Reflexion\screens\webradio_FullScreenContent.xaml">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Skin\default\screens\webradio_dialogLoadUpdate.xaml">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Skin\default\screens\webradio_FullScreenContent.xaml">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Skin\Titanium\screens\webradio_Home.xaml">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Skin\Reflexion\screens\webradio_Home.xaml">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Skin\default\screens\webradio_dialogSettingsStreamlistUpdate.xaml">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Skin\Titanium\screens\webradio_Filter.xaml">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Skin\Titanium\screens\webradio_CurrentlyPlaying.xaml">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Skin\BlueVision\screens\webradio_CurrentlyPlaying.xaml">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Skin\BlueVision\screens\webradio_Filter.xaml">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Skin\BlueVision\screens\webradio_FullscreenContent.xaml">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Skin\BlueVision\screens\webradio_Home.xaml">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Skin\BlueVision\themes\default\styles\WebradioStyles.xaml">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Skin\BlueVision\themes\Win10\screens\webradio_CurrentlyPlaying.xaml">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Skin\BlueVision\themes\Win10\screens\webradio_Filter.xaml">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Skin\BlueVision\themes\Win10\screens\webradio_FullscreenContent.xaml">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Skin\BlueVision\themes\Win10\screens\webradio_Home.xaml">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Skin\BlueVision\themes\Win10\styles\WebradioStyles.xaml">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Skin\WMCSkin\screens\webradio_CurrentlyPlaying.xaml">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Skin\WMCSkin\screens\webradio_dialogSearchInStreams.xaml">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Skin\WMCSkin\screens\webradio_dialogShowFilter.xaml">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Skin\WMCSkin\screens\webradio_Filter.xaml">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Skin\WMCSkin\screens\webradio_FullScreenContent.xaml">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Skin\WMCSkin\screens\webradio_Home.xaml">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Skin\WMCSkin\screens\webradio_Settings.xaml">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Skin\WMCSkin\themes\default\styles\WebradioStyles.xaml">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
@@ -334,6 +392,41 @@
   <ItemGroup>
     <Content Include="Skin\default\screens\webradio_dialogShowMessage.xaml">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Skin\Nereus\screens\webradio_CurrentlyPlaying.xaml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Skin\Nereus\screens\webradio_dialogSearchInStreams.xaml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Skin\Nereus\screens\webradio_dialogShowFilter.xaml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Skin\Nereus\screens\webradio_Filter.xaml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Skin\Nereus\screens\webradio_FullScreenContent.xaml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Skin\Nereus\screens\webradio_Home.xaml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Skin\Nereus\screens\webradio_Settings.xaml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Skin\Nereus\themes\default\styles\WebradioStyles.xaml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
