@@ -1,7 +1,7 @@
-﻿#region Copyright (C) 2007-2013 Team MediaPortal
+﻿#region Copyright (C) 2007-2019 Team MediaPortal
 
 /*
-    Copyright (C) 2007-2013 Team MediaPortal
+    Copyright (C) 2007-2019 Team MediaPortal
     http://www.team-mediaportal.com
 
     This file is part of MediaPortal 2
@@ -39,7 +39,7 @@ namespace Webradio.Helper
 
     public static void Listeners()
     {
-      string listeners = "unknown";
+      var listeners = "unknown";
 
       if (!ServiceRegistration.Get<IPlayerContextManager>().IsAudioContextActive & ATimer.Enabled)
       {
@@ -51,10 +51,7 @@ namespace Webradio.Helper
       {
         var link = WebradioHome.SelectedStream.StreamUrls[0].StreamUrl;
 
-        if (WebradioHome.SelectedStream.StreamUrls[0].Provider == "Ru")
-        {
-          link = WebradioHome.SelectedStream.StreamUrls[0].StreamUrl.Substring(0, WebradioHome.SelectedStream.StreamUrls[0].StreamUrl.LastIndexOf("/", StringComparison.Ordinal));
-        }
+        if (WebradioHome.SelectedStream.StreamUrls[0].Provider == "Ru") link = WebradioHome.SelectedStream.StreamUrls[0].StreamUrl.Substring(0, WebradioHome.SelectedStream.StreamUrls[0].StreamUrl.LastIndexOf("/", StringComparison.Ordinal));
 
         var request = (HttpWebRequest)WebRequest.Create(link);
         request.UserAgent = "Mozilla";
@@ -62,21 +59,19 @@ namespace Webradio.Helper
 
         try
         {
-          using (WebResponse response = request.GetResponse())
+          using (var response = request.GetResponse())
           {
-            if (response.ContentType == "text/html" | response.ContentType == "text/xml")
-            {
-              using (Stream stream = response.GetResponseStream())
+            if ((response.ContentType == "text/html") | (response.ContentType == "text/xml"))
+              using (var stream = response.GetResponseStream())
               {
                 if (stream == null) return;
 
                 using (var reader = new StreamReader(stream))
                 {
-                  string s = reader.ReadToEnd();
+                  var s = reader.ReadToEnd();
 
                   //SHOUTcast
-                  if (WebradioHome.SelectedStream.StreamUrls[0].Provider == "ShC" & s.Contains("Server is currently up"))
-                  {
+                  if ((WebradioHome.SelectedStream.StreamUrls[0].Provider == "ShC") & s.Contains("Server is currently up"))
                     try
                     {
                       var i = s.LastIndexOf(">", s.LastIndexOf("listeners", StringComparison.Ordinal), StringComparison.Ordinal) + 1;
@@ -86,7 +81,6 @@ namespace Webradio.Helper
                     {
                       listeners = "";
                     }
-                  }
 
                   //Icecast
                   if (WebradioHome.SelectedStream.StreamUrls[0].Provider == "ScC")
@@ -95,7 +89,6 @@ namespace Webradio.Helper
 
                   //Ru
                   if (WebradioHome.SelectedStream.StreamUrls[0].Provider == "Ru")
-                  {
                     try
                     {
                       var search = WebradioHome.SelectedStream.StreamUrls[0].StreamUrl.Substring(WebradioHome.SelectedStream.StreamUrls[0].StreamUrl.LastIndexOf("/", StringComparison.Ordinal)) + ",";
@@ -106,11 +99,9 @@ namespace Webradio.Helper
                     {
                       listeners = "";
                     }
-                  }
 
                   //Streamerspanel
-                  if (WebradioHome.SelectedStream.StreamUrls[0].StreamUrl == "StP" & s.Contains("Server is currently up"))
-                  {
+                  if ((WebradioHome.SelectedStream.StreamUrls[0].StreamUrl == "StP") & s.Contains("Server is currently up"))
                     try
                     {
                       var i = s.LastIndexOf(">", s.LastIndexOf("listeners", StringComparison.Ordinal), StringComparison.Ordinal) + 1;
@@ -120,11 +111,9 @@ namespace Webradio.Helper
                     {
                       listeners = "";
                     }
-                  }
 
                   //Steamcast
                   if (WebradioHome.SelectedStream.StreamUrls[0].StreamUrl == "StC")
-                  {
                     try
                     {
                       var i = s.LastIndexOf(">", s.LastIndexOf("listeners", StringComparison.Ordinal), StringComparison.Ordinal) + 1;
@@ -134,7 +123,6 @@ namespace Webradio.Helper
                     {
                       listeners = "";
                     }
-                  }
 
                   if (listeners == "unknown")
                   {
@@ -149,7 +137,6 @@ namespace Webradio.Helper
                   ATimer.Start();
                 }
               }
-            }
           }
         }
         catch (WebException ex)

@@ -1,7 +1,7 @@
-﻿#region Copyright (C) 2007-2013 Team MediaPortal
+﻿#region Copyright (C) 2007-2019 Team MediaPortal
 
 /*
-    Copyright (C) 2007-2013 Team MediaPortal
+    Copyright (C) 2007-2019 Team MediaPortal
     http://www.team-mediaportal.com
 
     This file is part of MediaPortal 2
@@ -28,7 +28,6 @@ using System.Reflection;
 using MediaPortal.Common;
 using MediaPortal.Common.Logging;
 using MediaPortal.Common.MediaManagement;
-using MediaPortal.Common.ResourceAccess;
 using MediaPortal.UI.Players.BassPlayer;
 using MediaPortal.UI.Players.BassPlayer.PlayerComponents;
 using MediaPortal.UI.Presentation.Players;
@@ -62,11 +61,10 @@ namespace Webradio.Player
       // Set back to valid audio mimetype
       mimeType = "audio/stream";
 
-      IResourceLocator locator = mediaItem.GetResourceLocator();
+      var locator = mediaItem.GetResourceLocator();
       if (InputSourceFactory.CanPlay(locator, mimeType))
       {
-
-       // Bass.BASS_PluginLoad(@"C:\Users\dierk_000\Downloads\basswm24\basswma.dll");
+        // Bass.BASS_PluginLoad(@"C:\Users\dierk_000\Downloads\basswm24\basswma.dll");
 
         BassPlayer player = new WebRadioBassPlayer(_pluginDirectory);
 
@@ -82,8 +80,10 @@ namespace Webradio.Player
           player.Dispose();
           return null;
         }
+
         return player;
       }
+
       return null;
     }
 

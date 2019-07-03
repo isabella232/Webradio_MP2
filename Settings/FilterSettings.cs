@@ -1,7 +1,7 @@
-﻿#region Copyright (C) 2007-2013 Team MediaPortal
+﻿#region Copyright (C) 2007-2019 Team MediaPortal
 
 /*
-    Copyright (C) 2007-2013 Team MediaPortal
+    Copyright (C) 2007-2019 Team MediaPortal
     http://www.team-mediaportal.com
 
     This file is part of MediaPortal 2
@@ -48,6 +48,12 @@ namespace Webradio.Settings
     {
       FilterSetupList = list;
     }
+
+    /// <summary>
+    /// The Active Filter
+    /// </summary>
+    [Setting(SettingScope.User, null)]
+    public FilterSetupInfo ActiveFilter { get; set; } = null;
 
     /// <summary>
     /// List of all Filter

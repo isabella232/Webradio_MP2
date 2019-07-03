@@ -1,7 +1,7 @@
-﻿#region Copyright (C) 2007-2013 Team MediaPortal
+﻿#region Copyright (C) 2007-2019 Team MediaPortal
 
 /*
-    Copyright (C) 2007-2013 Team MediaPortal
+    Copyright (C) 2007-2019 Team MediaPortal
     http://www.team-mediaportal.com
 
     This file is part of MediaPortal 2
@@ -36,21 +36,15 @@ namespace Webradio.Dialogues
 {
   public class WebradioDlgSettingsStreamlistUpdate : IWorkflowModel
   {
-    #region Consts
-
-    public const string MODEL_ID_STR = "A391ACBF-BEFE-4820-B17D-D06545CF9987";
-    public const string NAME = "name";
-
-    #endregion
+    public static ItemsList Items = new ItemsList();
+    public string OfflineVersion = string.Empty;
 
     public string OnlineVersion = string.Empty;
-    public string OfflineVersion = string.Empty;
-    public static ItemsList Items = new ItemsList();
     public WebradioSettings Settings = new WebradioSettings();
 
     public void Init()
     {
-      ISettingsManager settingsManager = ServiceRegistration.Get<ISettingsManager>();
+      var settingsManager = ServiceRegistration.Get<ISettingsManager>();
       Settings = settingsManager.Load<WebradioSettings>();
 
       OfflineVersion = ": " + Convert.ToString(StreamlistUpdate.OfflineVersion());
@@ -61,37 +55,25 @@ namespace Webradio.Dialogues
       var item = new ListItem();
       item.AdditionalProperties[NAME] = "Automatically";
       item.SetLabel("Name", "[Webradio.Settings.Automatically]");
-      if (Settings.StreamlistUpdateMode == "Automatically")
-      {
-        item.Selected = true;
-      }
+      if (Settings.StreamlistUpdateMode == "Automatically") item.Selected = true;
       Items.Add(item);
 
       item = new ListItem();
       item.AdditionalProperties[NAME] = "Manually";
       item.SetLabel("Name", "[Webradio.Settings.Manually]");
-      if (Settings.StreamlistUpdateMode == "Manually")
-      {
-        item.Selected = true;
-      }
+      if (Settings.StreamlistUpdateMode == "Manually") item.Selected = true;
       Items.Add(item);
 
       item = new ListItem();
       item.AdditionalProperties[NAME] = "Disabled";
       item.SetLabel("Name", "[Webradio.Settings.Disabled]");
-      if (Settings.StreamlistUpdateMode == "Disabled")
-      {
-        item.Selected = true;
-      }
+      if (Settings.StreamlistUpdateMode == "Disabled") item.Selected = true;
       Items.Add(item);
     }
 
     public void Selected(ListItem item)
     {
-      foreach (ListItem li in Items)
-      {
-        li.Selected = (string)item.AdditionalProperties[NAME] == (string)li.AdditionalProperties[NAME];
-      }
+      foreach (var li in Items) li.Selected = (string)item.AdditionalProperties[NAME] == (string)li.AdditionalProperties[NAME];
       Settings.StreamlistUpdateMode = (string)item.AdditionalProperties[NAME];
       Items.FireChange();
     }
@@ -101,12 +83,16 @@ namespace Webradio.Dialogues
       StreamlistUpdate.MakeUpdate();
     }
 
+    #region Consts
+
+    public const string MODEL_ID_STR = "A391ACBF-BEFE-4820-B17D-D06545CF9987";
+    public const string NAME = "name";
+
+    #endregion
+
     #region IWorkflowModel implementation
 
-    public Guid ModelId
-    {
-      get { return new Guid(MODEL_ID_STR); }
-    }
+    public Guid ModelId => new Guid(MODEL_ID_STR);
 
     public bool CanEnterState(NavigationContext oldContext, NavigationContext newContext)
     {

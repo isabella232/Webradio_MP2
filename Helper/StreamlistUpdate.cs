@@ -1,7 +1,7 @@
-﻿#region Copyright (C) 2007-2013 Team MediaPortal
+﻿#region Copyright (C) 2007-2019 Team MediaPortal
 
 /*
-    Copyright (C) 2007-2013 Team MediaPortal
+    Copyright (C) 2007-2019 Team MediaPortal
     http://www.team-mediaportal.com
 
     This file is part of MediaPortal 2
@@ -30,7 +30,6 @@ using MediaPortal.Common.PathManager;
 using MediaPortal.Common.Settings;
 using MediaPortal.UI.Presentation.Workflow;
 using Webradio.Dialogues;
-using Webradio.Models;
 using Webradio.Settings;
 
 namespace Webradio.Helper
@@ -50,7 +49,7 @@ namespace Webradio.Helper
 
     public static int OnlineVersion()
     {
-      WebRequest request = WebRequest.Create(StreamlistServerPath);
+      var request = WebRequest.Create(StreamlistServerPath);
       request.Credentials = CredentialCache.DefaultCredentials;
       WebResponse response = null;
       StreamReader reader = null;
@@ -59,12 +58,12 @@ namespace Webradio.Helper
       {
         response = request.GetResponse();
         reader = new StreamReader(response.GetResponseStream());
-        char[] buffer = new char[200];
+        var buffer = new char[200];
         reader.Read(buffer, 0, 200);
 
-        string s = new string(buffer);
-        int a = s.IndexOf("<Version>", StringComparison.Ordinal) + 9;
-        int b = s.IndexOf("</Version>", StringComparison.Ordinal);
+        var s = new string(buffer);
+        var a = s.IndexOf("<Version>", StringComparison.Ordinal) + 9;
+        var b = s.IndexOf("</Version>", StringComparison.Ordinal);
         return Convert.ToInt32(s.Substring(a, b - a));
       }
       catch (Exception ex)
@@ -80,36 +79,26 @@ namespace Webradio.Helper
 
     public static int OfflineVersion()
     {
-      if (!StreamListExists())
-      {
-        return -1;
-      }
+      if (!StreamListExists()) return -1;
 
       try
       {
-        MyStreams ms = MyStreams.Read(StreamListFile);
+        var ms = MyStreams.Read(StreamListFile);
         return Convert.ToInt32(ms.Version);
       }
       catch (Exception)
       {
         return -1;
       }
-
     }
 
     public static void CheckUpdate()
     {
       if (OfflineVersion() >= OnlineVersion()) return;
       var mode = ServiceRegistration.Get<ISettingsManager>().Load<WebradioSettings>().StreamlistUpdateMode;
-      if (mode == "Manually")
-      {
-        MakeUpdate();
-      }
+      if (mode == "Manually") MakeUpdate();
 
-      if (mode == "Automatically")
-      {
-        WebradioDlgLoadUpdate.LoadSenderListe();
-      }
+      if (mode == "Automatically") WebradioDlgLoadUpdate.LoadSenderListe();
     }
 
     public static void MakeUpdate()

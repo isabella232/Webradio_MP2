@@ -1,7 +1,7 @@
-﻿#region Copyright (C) 2007-2013 Team MediaPortal
+﻿#region Copyright (C) 2007-2019 Team MediaPortal
 
 /*
-    Copyright (C) 2007-2013 Team MediaPortal
+    Copyright (C) 2007-2019 Team MediaPortal
     http://www.team-mediaportal.com
 
     This file is part of MediaPortal 2
@@ -39,19 +39,11 @@ namespace Webradio.Dialogues
 {
   internal class WebradioDlgShowFilter : IWorkflowModel
   {
-    #region Consts
-
-    public const string MODEL_ID_STR = "63F1DA3E-E87F-4478-83E7-C13966447869";
-    public const string KEY_FILTER = "filter";
-
-    #endregion
-
     public static ItemsList FilterItems = new ItemsList();
     public static List<FilterSetupInfo> FilterList = new List<FilterSetupInfo>();
-    private bool _quick = false;
+    private static FilterSettings FilterSettings;
+    private bool _quick;
     private string _typ = string.Empty;
-
-    protected delegate Func<MyStream, bool> CreateFilterDelegate(string filter);
 
     public void Init()
     {
@@ -64,57 +56,53 @@ namespace Webradio.Dialogues
       _quick = false;
       FilterList = ServiceRegistration.Get<ISettingsManager>().Load<FilterSettings>().FilterSetupList;
       if (FilterList == null)
-      {
-        FilterList = new List<FilterSetupInfo> { new FilterSetupInfo("New Filter", "0", new List<string>(), new List<string>(), new List<string>(), new List<string>()) };
-      }
+        FilterList = new List<FilterSetupInfo>
+        {
+          new FilterSetupInfo(
+            "New Filter", "0",
+            new List<string>(),
+            new List<string>(),
+            new List<string>(),
+            new List<string>())
+        };
 
-      List<string> list = new List<string>();
+      FilterSettings = new FilterSettings(FilterList);
 
-      foreach (FilterSetupInfo f in FilterList.Where(f => !list.Contains(f.Titel)))
-      {
-        list.Add(f.Titel);
-      }
+      var list = new List<string>();
+
+      foreach (var f in FilterList.Where(f => !list.Contains(f.Titel))) list.Add(f.Titel);
       FillItems(list);
     }
 
     public void Selected(ListItem item)
     {
-      if (_quick == true)
-      {
+      if (_quick)
         SelectedQuick(item);
-      }
       else
-      {
         SelectedFilter(item);
-      }
       ServiceRegistration.Get<IScreenManager>().CloseTopmostDialog();
     }
 
     public void SelectedFilter(ListItem item)
     {
-      List<MyStream> list = new List<MyStream>();
-      foreach (IEnumerable<MyStream> query in from f in FilterList
-        where f.Titel == (string)item.AdditionalProperties[KEY_FILTER]
-        select (from r in WebradioHome.StreamList
-          where
-            Contains(f.Countrys, r.Country)
-            && Contains(f.Citys, r.City)
-            && Contains2(f.Genres, r.Genres)
-            && Contains(f.Bitrate, r.StreamUrls[0].Bitrate)
-          select r))
-      {
-        foreach (MyStream ms in query.Where(ms => !list.Contains(ms)))
+      var name = (string)item.AdditionalProperties[KEY_FILTER];
+      var list = new List<MyStream>();
+
+      foreach (var f in FilterList)
+        if (f.Titel == name)
         {
-          list.Add(ms);
+          list = MyStreams.Filtered(f, WebradioHome.StreamList);
+          FilterSettings.ActiveFilter = f;
+          ServiceRegistration.Get<ISettingsManager>().Save(FilterSettings);
+          break;
         }
-        break;
-      }
+
       WebradioHome.FillItemList(list);
     }
 
     public void SelectedQuick(ListItem item)
     {
-      Func<MyStream, bool> predicate = (Func<MyStream, bool>)item.AdditionalProperties[KEY_FILTER];
+      var predicate = (Func<MyStream, bool>)item.AdditionalProperties[KEY_FILTER];
       var filtered = WebradioHome.StreamList.Where(predicate).ToList();
       WebradioHome.FillItemList(filtered);
     }
@@ -164,20 +152,17 @@ namespace Webradio.Dialogues
       FilterItems.Clear();
       var sorted = list.ToList();
       sorted.Sort();
-      foreach (string s in sorted)
+      foreach (var s in sorted)
       {
-        ListItem item = new ListItem();
+        var item = new ListItem();
         item.AdditionalProperties[KEY_FILTER] = createFilterDelegate(s); // Creates a dynamic filter like s => s.Titel="Radio 100"
         if (_typ == "country")
-        {
           item.SetLabel("Name", "[Country." + s + "]");
-        }
         else
-        {
           item.SetLabel("Name", s);
-        }        
         FilterItems.Add(item);
       }
+
       FilterItems.FireChange();
     }
 
@@ -185,20 +170,17 @@ namespace Webradio.Dialogues
     {
       FilterItems.Clear();
       list.Sort();
-      foreach (string s in list)
+      foreach (var s in list)
       {
-        ListItem item = new ListItem();
+        var item = new ListItem();
         item.AdditionalProperties[KEY_FILTER] = s;
         if (_typ == "country")
-        {
           item.SetLabel("Name", "[Country." + s + "]");
-        }
         else
-        {
           item.SetLabel("Name", s);
-        }        
         FilterItems.Add(item);
       }
+
       FilterItems.FireChange();
     }
 
@@ -210,21 +192,24 @@ namespace Webradio.Dialogues
     private static bool Contains2(ICollection<string> l, string s)
     {
       if (s == null) throw new ArgumentNullException("s");
-      if (l.Count == 0)
-      {
-        return true;
-      }
+      if (l.Count == 0) return true;
 
-      string[] split = s.Split(',');
+      var split = s.Split(',');
       return split.Any(part => l.Contains(part.Trim()));
     }
 
+    protected delegate Func<MyStream, bool> CreateFilterDelegate(string filter);
+
+    #region Consts
+
+    public const string MODEL_ID_STR = "63F1DA3E-E87F-4478-83E7-C13966447869";
+    public const string KEY_FILTER = "filter";
+
+    #endregion
+
     #region IWorkflowModel implementation
 
-    public Guid ModelId
-    {
-      get { return new Guid(MODEL_ID_STR); }
-    }
+    public Guid ModelId => new Guid(MODEL_ID_STR);
 
     public bool CanEnterState(NavigationContext oldContext, NavigationContext newContext)
     {

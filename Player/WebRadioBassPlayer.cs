@@ -1,7 +1,7 @@
-﻿#region Copyright (C) 2007-2013 Team MediaPortal
+﻿#region Copyright (C) 2007-2019 Team MediaPortal
 
 /*
-    Copyright (C) 2007-2013 Team MediaPortal
+    Copyright (C) 2007-2019 Team MediaPortal
     http://www.team-mediaportal.com
 
     This file is part of MediaPortal 2
@@ -39,6 +39,8 @@ namespace Webradio.Player
     {
     }
 
+    public Type UIContributorType => typeof(WebRadioUIContributor);
+
     protected override bool GetMediaItemPlayData(MediaItem mediaItem, out string mimeType, out string title)
     {
       // Change the mimeType back to "audio/..." to allow input source factory building a valid source.
@@ -48,11 +50,6 @@ namespace Webradio.Player
       if (mimeType == WebRadioPlayerHelper.WEBRADIO_MIMETYPE)
         mimeType = "audio/stream";
       return result;
-    }
-
-    public Type UIContributorType
-    {
-      get { return typeof(WebRadioUIContributor); }
     }
   }
 }

@@ -1,7 +1,7 @@
-﻿#region Copyright (C) 2007-2013 Team MediaPortal
+﻿#region Copyright (C) 2007-2019 Team MediaPortal
 
 /*
-    Copyright (C) 2007-2013 Team MediaPortal
+    Copyright (C) 2007-2019 Team MediaPortal
     http://www.team-mediaportal.com
 
     This file is part of MediaPortal 2
@@ -39,15 +39,9 @@ namespace Webradio.Dialogues
 {
   internal class WebradioDlgShowFavorites : IWorkflowModel
   {
-    #region Consts
-
-    public const string MODEL_ID_STR = "9723DCC8-969D-470E-B156-F4E6E639DD18";
-    public const string NAME = "name";
-
-    #endregion
-
-    public bool Changed = false;
     public ItemsList AllFavoritItems = new ItemsList();
+
+    public bool Changed;
     public ItemsList FavoritItems = new ItemsList();
     public List<FavoriteSetupInfo> FavoritList = new List<FavoriteSetupInfo>();
     public string SelectedStream = string.Empty;
@@ -59,15 +53,16 @@ namespace Webradio.Dialogues
       {
         ImportAllFavorits(WebradioHome.SelectedStream);
         SelectedStream = WebradioHome.SelectedStream.Title;
-      }     
-      ImportFavorits();      
+      }
+
+      ImportFavorits();
     }
 
     public void ImportAllFavorits(MyStream stream)
     {
       AllFavoritItems.Clear();
 
-      foreach (FavoriteSetupInfo f in FavoritList)
+      foreach (var f in FavoritList)
       {
         var item = new ListItem();
         item.AdditionalProperties[NAME] = f.Titel;
@@ -75,14 +70,14 @@ namespace Webradio.Dialogues
         item.Selected = f.StreamUrls.Contains(stream.StreamUrls[0].StreamUrl);
         AllFavoritItems.Add(item);
       }
+
       AllFavoritItems.FireChange();
     }
 
     public void ImportFavorits()
     {
       FavoritItems.Clear();
-      foreach (FavoriteSetupInfo f in FavoritList)
-      {
+      foreach (var f in FavoritList)
         if (f.StreamUrls.Count > 0)
         {
           var item = new ListItem();
@@ -91,7 +86,7 @@ namespace Webradio.Dialogues
           item.SetLabel("Count", Convert.ToString(f.StreamUrls.Count));
           FavoritItems.Add(item);
         }
-      }
+
       FavoritItems.FireChange();
     }
 
@@ -101,25 +96,20 @@ namespace Webradio.Dialogues
     public void SelectFavorite(ListItem item)
     {
       var list = new List<MyStream>();
-      foreach (var query in from f in FavoritList where f.Titel == (string)item.AdditionalProperties[NAME] select (from r in WebradioHome.StreamList where _contains(f.StreamUrls, r.StreamUrls[0].StreamUrl) select r))
+      foreach (var query in from f in FavoritList where f.Titel == (string)item.AdditionalProperties[NAME] select from r in WebradioHome.StreamList where _contains(f.StreamUrls, r.StreamUrls[0].StreamUrl) select r)
       {
-        foreach (MyStream ms in query.Where(ms => !list.Contains(ms)))
-        {
-          list.Add(ms);
-        }
+        foreach (var ms in query.Where(ms => !list.Contains(ms))) list.Add(ms);
         break;
       }
+
       WebradioHome.FillItemList(list);
       ServiceRegistration.Get<IScreenManager>().CloseTopmostDialog();
     }
 
     private static bool _contains(List<string> l, string s)
     {
-      if (l.Count == 0)
-      {
-        return true;
-      }
-      string[] sp = s.Split(new[] { ',' });
+      if (l.Count == 0) return true;
+      var sp = s.Split(',');
       return sp.Any(l.Contains);
     }
 
@@ -127,9 +117,9 @@ namespace Webradio.Dialogues
     {
       var s = (string)item.AdditionalProperties[NAME];
 
-      string url = WebradioHome.SelectedStream.StreamUrls[0].StreamUrl;
+      var url = WebradioHome.SelectedStream.StreamUrls[0].StreamUrl;
 
-      foreach (FavoriteSetupInfo f in FavoritList.Where(f => f.Titel == s))
+      foreach (var f in FavoritList.Where(f => f.Titel == s))
       {
         if (item.Selected)
         {
@@ -141,17 +131,22 @@ namespace Webradio.Dialogues
           item.Selected = true;
           f.StreamUrls.Add(url);
         }
+
         Changed = true;
         ImportFavorits();
       }
     }
 
+    #region Consts
+
+    public const string MODEL_ID_STR = "9723DCC8-969D-470E-B156-F4E6E639DD18";
+    public const string NAME = "name";
+
+    #endregion
+
     #region IWorkflowModel implementation
 
-    public Guid ModelId
-    {
-      get { return new Guid(MODEL_ID_STR); }
-    }
+    public Guid ModelId => new Guid(MODEL_ID_STR);
 
     public bool CanEnterState(NavigationContext oldContext, NavigationContext newContext)
     {
@@ -165,10 +160,7 @@ namespace Webradio.Dialogues
 
     public void ExitModelContext(NavigationContext oldContext, NavigationContext newContext)
     {
-      if (Changed)
-      {
-        ServiceRegistration.Get<ISettingsManager>().Save(new FavoritesSettings(FavoritList));
-      }
+      if (Changed) ServiceRegistration.Get<ISettingsManager>().Save(new FavoritesSettings(FavoritList));
     }
 
     public void ChangeModelContext(NavigationContext oldContext, NavigationContext newContext, bool push)

@@ -100,8 +100,8 @@
           
           <!-- Contents -->
           <ListView x:Name="lvStreams" Margin="-10,-20,-45,-20" HorizontalAlignment="Stretch"
-                    VerticalAlignment="Stretch" Style="{ThemeResource WebRadioListViewStyle}" RestoreFocus="True"
-                    ItemsSource="{Binding Path=AllRadioStreams}" SetFocusPrio="RestoreState">
+                    VerticalAlignment="Stretch" Style="{ThemeResource WebRadioListViewStyle}"
+                    ItemsSource="{Binding Path=AllRadioStreams}" >
             <ListView.Resources>
               <CommandList x:Key="Menu_Command">
                 <Command Source="{StaticResource Model}" Path="SelectStream">
@@ -115,12 +115,12 @@
 
           <Grid Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="70,250,0,80">
             <Grid.RowDefinitions>
-              <RowDefinition Height="50*"/>
-              <RowDefinition Height="50*"/>
+              <RowDefinition Height="50*" />
+              <RowDefinition Height="50*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="60*"/>
-              <ColumnDefinition Width="40*"/>
+              <ColumnDefinition Width="60*"  />
+              <ColumnDefinition Width="40*"  />
             </Grid.ColumnDefinitions>
 
             <!--Logo-->
@@ -190,7 +190,7 @@
             </StackPanel>
 
             <Label Grid.Row="1" Margin="5" DataContext="{Binding ElementName=lvStreams,Path=CurrentItem}"
-                   Content="{Binding [Description]}" FontSize="{ThemeResource SmallFontSize}" Color="{ThemeResource MediaItemUnwatchedColor}"
+                   Content="{Binding [Description]}" FontSize="{ThemeResource SmallFontSize}" Color="{ThemeResource MenuTextBackground}"
                    Wrap="True" TextTrimming="WordEllipsis" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
 
           </Grid>

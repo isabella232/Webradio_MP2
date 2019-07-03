@@ -24,69 +24,25 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using MediaPortal.UI.Presentation.DataObjects;
 using MediaPortal.UI.Presentation.Models;
 using MediaPortal.UI.Presentation.Workflow;
-using Webradio.Helper;
-using Webradio.Models;
+using Webradio.Player;
 
 namespace Webradio.Dialogues
 {
-  internal class WebradioDlgDeleteFilter : IWorkflowModel
+  internal class WebradioDlgShowMessage : IWorkflowModel
   {
-    public static List<FilterSetupInfo> FilterList = new List<FilterSetupInfo>();
-    public ItemsList FilterItems = new ItemsList();
+    public string Message = string.Empty;
 
     public void Init()
     {
-      FilterList = WebradioFilter.FilterList;
-      ImportFilter();
-    }
-
-    public void ImportFilter()
-    {
-      FilterItems.Clear();
-      var id = 0;
-      foreach (var mf in FilterList)
-      {
-        var item = new ListItem();
-        item.AdditionalProperties[NAME] = mf.Titel;
-        item.AdditionalProperties[ID] = mf.Id;
-        item.SetLabel("Name", mf.Titel);
-        FilterItems.Add(item);
-        id += 1;
-      }
-
-      FilterItems.FireChange();
-    }
-
-    public void Select(ListItem item)
-    {
-      item.Selected = item.Selected != true;
-      item.FireChange();
-    }
-
-    public void Delete()
-    {
-      foreach (var item in FilterItems.Where(item => item.Selected))
-      foreach (var mf in FilterList)
-      {
-        if (mf.Id != (string)item.AdditionalProperties[ID]) continue;
-        FilterList.Remove(mf);
-        break;
-      }
-
-      WebradioFilter.SaveImage = "Unsaved.png";
-      WebradioFilter.FilterTitel = "";
-      ImportFilter();
+      Message = WebRadioPlayerHelper.StatusCode;
     }
 
     #region Consts
 
-    public const string MODEL_ID_STR = "59AB04C6-6B8D-41E5-A041-7AFC8DEDEB89";
+    public const string MODEL_ID_STR = "BEB5B535-15BF-4C6A-82CF-644ED5A4D8B5";
     public const string NAME = "name";
-    public const string ID = "id";
 
     #endregion
 
@@ -110,7 +66,6 @@ namespace Webradio.Dialogues
 
     public void ChangeModelContext(NavigationContext oldContext, NavigationContext newContext, bool push)
     {
-      // We could initialize some data here when changing the media navigation state
     }
 
     public void Deactivate(NavigationContext oldContext, NavigationContext newContext)
