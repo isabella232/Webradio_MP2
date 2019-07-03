@@ -1,7 +1,7 @@
-﻿#region Copyright (C) 2007-2013 Team MediaPortal
+﻿#region Copyright (C) 2007-2019 Team MediaPortal
 
 /*
-    Copyright (C) 2007-2013 Team MediaPortal
+    Copyright (C) 2007-2019 Team MediaPortal
     http://www.team-mediaportal.com
 
     This file is part of MediaPortal 2
@@ -25,6 +25,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Xml.Serialization;
 
 namespace Webradio.Helper
@@ -33,9 +34,9 @@ namespace Webradio.Helper
   {
     private static readonly XmlSerializer SERIALIZER = new XmlSerializer(typeof(MyStreams));
     private static FileStream _fileStream;
+    public List<MyStream> Streams = new List<MyStream>();
 
     public string Version = "1";
-    public List<MyStream> Streams = new List<MyStream>();
 
     public MyStreams()
     {
@@ -73,27 +74,52 @@ namespace Webradio.Helper
       {
         _fileStream.Close();
       }
+
       return ms;
+    }
+
+    public static List<MyStream> Filtered(FilterSetupInfo filter, List<MyStream> streams)
+    {
+      var list = new List<MyStream>();
+      foreach (var ms in streams)
+        if (Contains2(filter.Genres, ms.Genres) &&
+            Contains(filter.Countrys, ms.Country) &&
+            Contains(filter.Citys, ms.City) &&
+            Contains(filter.Bitrate, ms.StreamUrls[0].Bitrate))
+          list.Add(ms);
+
+      return list;
+    }
+
+    private static bool Contains(List<string> l, string s)
+    {
+      return l.Count == 0 || l.Contains(s);
+    }
+
+    private static bool Contains2(ICollection<string> l, string s)
+    {
+      if (s == null) throw new ArgumentNullException("s");
+      if (l.Count == 0) return true;
+
+      var split = s.Split(',');
+      return split.Any(part => l.Contains(part.Trim()));
     }
   }
 
   public class MyStream
   {
-    [XmlAttribute("City")]
-    public string City = string.Empty;
+    [XmlAttribute("City")] public string City = string.Empty;
 
-    [XmlAttribute("Country")]
-    public string Country = string.Empty;
+    [XmlAttribute("Country")] public string Country = string.Empty;
 
     public List<Description> Descriptions = new List<Description>();
-    public string Genres = String.Empty;
-    public string Homepage = String.Empty;
-    public string Language = String.Empty;
-    public string Logo = String.Empty;
+    public string Genres = string.Empty;
+    public string Homepage = string.Empty;
+    public string Language = string.Empty;
+    public string Logo = string.Empty;
     public List<Url> StreamUrls = new List<Url>();
 
-    [XmlAttribute("Title")]
-    public string Title = String.Empty;
+    [XmlAttribute("Title")] public string Title = string.Empty;
 
     public MyStream()
     {
@@ -115,20 +141,19 @@ namespace Webradio.Helper
 
   public class Url
   {
-    [XmlAttribute("Provider")]
-    public string Provider = String.Empty;
-    [XmlAttribute("Bitrate")]
-    public string Bitrate = String.Empty;
-    [XmlAttribute("Frequenz")]
-    public string Frequenz = String.Empty;
-    [XmlAttribute("Mode")]
-    public string Mode = String.Empty;
-    [XmlAttribute("Name")]
-    public string Name = String.Empty;
-    [XmlText]
-    public string StreamUrl = String.Empty;
-    [XmlAttribute("Typ")]
-    public string Typ = String.Empty;
+    [XmlAttribute("Bitrate")] public string Bitrate = string.Empty;
+
+    [XmlAttribute("Frequenz")] public string Frequenz = string.Empty;
+
+    [XmlAttribute("Mode")] public string Mode = string.Empty;
+
+    [XmlAttribute("Name")] public string Name = string.Empty;
+
+    [XmlAttribute("Provider")] public string Provider = string.Empty;
+
+    [XmlText] public string StreamUrl = string.Empty;
+
+    [XmlAttribute("Typ")] public string Typ = string.Empty;
 
     public Url()
     {
@@ -148,10 +173,9 @@ namespace Webradio.Helper
 
   public class Description
   {
-    [XmlAttribute("Languagecode")]
-    public string Languagecode = String.Empty;
-    [XmlText]
-    public string Txt = String.Empty;
+    [XmlAttribute("Languagecode")] public string Languagecode = string.Empty;
+
+    [XmlText] public string Txt = string.Empty;
 
     public Description()
     {

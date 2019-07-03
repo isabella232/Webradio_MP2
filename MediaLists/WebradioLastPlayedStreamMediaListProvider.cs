@@ -22,43 +22,11 @@
 
 #endregion
 
-using System.Collections.Generic;
-using MediaPortal.Common.Settings;
-using Webradio.Helper;
 
-namespace Webradio.Settings
+namespace Webradio.MediaLists
 {
-  /// <summary>
-  /// Filter settings class.
-  /// </summary>
-  public class FilterSettings
+  public class WebradioLastPlayedStreamMediaListProvider : BaseLastPlayedStreamMediaListProvider
   {
-    /// <summary>
-    /// Constructor
-    /// </summary>
-    public FilterSettings()
-    {
-      FilterSetupList = new List<FilterSetupInfo>();
-    }
 
-    /// <summary>
-    /// Constructor
-    /// </summary>
-    public FilterSettings(List<FilterSetupInfo> list)
-    {
-      FilterSetupList = list;
-    }
-
-    /// <summary>
-    /// The Active Filter
-    /// </summary>
-    [Setting(SettingScope.User, null)]
-    public FilterSetupInfo ActiveFilter { get; set; } = null;
-
-    /// <summary>
-    /// List of all Filter
-    /// </summary>
-    [Setting(SettingScope.User, null)]
-    public List<FilterSetupInfo> FilterSetupList { get; set; }
   }
 }

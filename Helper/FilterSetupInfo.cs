@@ -1,7 +1,7 @@
-﻿#region Copyright (C) 2007-2013 Team MediaPortal
+﻿#region Copyright (C) 2007-2019 Team MediaPortal
 
 /*
-    Copyright (C) 2007-2013 Team MediaPortal
+    Copyright (C) 2007-2019 Team MediaPortal
     http://www.team-mediaportal.com
 
     This file is part of MediaPortal 2
@@ -22,19 +22,18 @@
 
 #endregion
 
-using System;
 using System.Collections.Generic;
 
 namespace Webradio.Helper
 {
   public class FilterSetupInfo
   {
-    public string Titel;
-    public string Id;
-    public List<string> Countrys;
-    public List<string> Citys;
-    public List<string> Genres;
     public List<string> Bitrate;
+    public List<string> Citys;
+    public List<string> Countrys;
+    public List<string> Genres;
+    public string Id;
+    public string Titel;
 
     public FilterSetupInfo()
     {
@@ -46,7 +45,7 @@ namespace Webradio.Helper
       Bitrate = new List<string>();
     }
 
-    public FilterSetupInfo(String titel, String id, List<string> countrys, List<string> citys, List<string> genres, List<string> bitrate)
+    public FilterSetupInfo(string titel, string id, List<string> countrys, List<string> citys, List<string> genres, List<string> bitrate)
     {
       Titel = titel;
       Id = id;

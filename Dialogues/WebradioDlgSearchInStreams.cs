@@ -1,7 +1,7 @@
-﻿#region Copyright (C) 2007-2013 Team MediaPortal
+﻿#region Copyright (C) 2007-2019 Team MediaPortal
 
 /*
-    Copyright (C) 2007-2013 Team MediaPortal
+    Copyright (C) 2007-2019 Team MediaPortal
     http://www.team-mediaportal.com
 
     This file is part of MediaPortal 2
@@ -37,78 +37,28 @@ namespace Webradio.Dialogues
 {
   internal class WebradioDlgSearchInStreams : IWorkflowModel
   {
-    #region Consts
-
-    public const string MODEL_ID_STR = "7AE86A07-DB55-4AA6-9FBF-B1888A4FF6DA";
-    public const string NO_STREAMS = "[Webradio.Dialog.Search.NoStreams]";
-    public const string ENTER_TEXT = "[Webradio.Dialog.Search.NoSearchText]";
-
-    #endregion
-
-    #region Propertys
-
-    private static AbstractProperty _searchTextProperty = new WProperty(typeof(string), string.Empty);
-
-    public AbstractProperty SearchTextProperty
-    {
-      get { return _searchTextProperty; }
-    }
-
-    public static string SearchText
-    {
-      get { return (string)_searchTextProperty.GetValue(); }
-      set { _searchTextProperty.SetValue(value); }
-    }
-
-    private static AbstractProperty _infoLabelProperty = new WProperty(typeof(string), string.Empty);
-
-    public AbstractProperty InfoLabelProperty
-    {
-      get { return _infoLabelProperty; }
-    }
-
-    public static string InfoLabel
-    {
-      get { return (string)_infoLabelProperty.GetValue(); }
-      set { _infoLabelProperty.SetValue(value); }
-    }
-
-    #endregion
-
     public void SearchTitel()
     {
       if (SearchText != "")
-      {
         FillList(WebradioHome.StreamList.Where(ms => ms.Title.ToUpper().IndexOf(SearchText.ToUpper(), StringComparison.Ordinal) >= 0).ToList());
-      }
       else
-      {
         InfoLabel = ENTER_TEXT;
-      }
     }
 
     public void SearchDescription()
     {
       if (SearchText != "")
-      {
         FillList(WebradioHome.StreamList.Where(ms => ms.Descriptions[0].Txt.ToUpper().IndexOf(SearchText.ToUpper(), StringComparison.Ordinal) >= 0).ToList());
-      }
       else
-      {
         InfoLabel = ENTER_TEXT;
-      }
     }
 
     public void SearchAll()
     {
       if (SearchText != "")
-      {
-        FillList(WebradioHome.StreamList.Where(ms => ms.Title.ToUpper().IndexOf(SearchText.ToUpper(), StringComparison.Ordinal) >= 0 | ms.Descriptions[0].Txt.ToUpper().IndexOf(SearchText.ToUpper(), StringComparison.Ordinal) >= 0).ToList());
-      }
+        FillList(WebradioHome.StreamList.Where(ms => (ms.Title.ToUpper().IndexOf(SearchText.ToUpper(), StringComparison.Ordinal) >= 0) | (ms.Descriptions[0].Txt.ToUpper().IndexOf(SearchText.ToUpper(), StringComparison.Ordinal) >= 0)).ToList());
       else
-      {
         InfoLabel = ENTER_TEXT;
-      }
     }
 
     public void FillList(List<MyStream> list)
@@ -124,12 +74,41 @@ namespace Webradio.Dialogues
       }
     }
 
+    #region Consts
+
+    public const string MODEL_ID_STR = "7AE86A07-DB55-4AA6-9FBF-B1888A4FF6DA";
+    public const string NO_STREAMS = "[Webradio.Dialog.Search.NoStreams]";
+    public const string ENTER_TEXT = "[Webradio.Dialog.Search.NoSearchText]";
+
+    #endregion
+
+    #region Propertys
+
+    private static readonly AbstractProperty _searchTextProperty = new WProperty(typeof(string), string.Empty);
+
+    public AbstractProperty SearchTextProperty => _searchTextProperty;
+
+    public static string SearchText
+    {
+      get => (string)_searchTextProperty.GetValue();
+      set => _searchTextProperty.SetValue(value);
+    }
+
+    private static readonly AbstractProperty _infoLabelProperty = new WProperty(typeof(string), string.Empty);
+
+    public AbstractProperty InfoLabelProperty => _infoLabelProperty;
+
+    public static string InfoLabel
+    {
+      get => (string)_infoLabelProperty.GetValue();
+      set => _infoLabelProperty.SetValue(value);
+    }
+
+    #endregion
+
     #region IWorkflowModel implementation
 
-    public Guid ModelId
-    {
-      get { return new Guid(MODEL_ID_STR); }
-    }
+    public Guid ModelId => new Guid(MODEL_ID_STR);
 
     public bool CanEnterState(NavigationContext oldContext, NavigationContext newContext)
     {

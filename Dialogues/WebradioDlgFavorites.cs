@@ -1,7 +1,7 @@
-﻿#region Copyright (C) 2007-2013 Team MediaPortal
+﻿#region Copyright (C) 2007-2019 Team MediaPortal
 
 /*
-    Copyright (C) 2007-2013 Team MediaPortal
+    Copyright (C) 2007-2019 Team MediaPortal
     http://www.team-mediaportal.com
 
     This file is part of MediaPortal 2
@@ -36,46 +36,9 @@ namespace Webradio.Dialogues
 {
   public class WebradioDlgFavorites : IWorkflowModel
   {
-    #region Consts
-
-    public const string MODEL_ID_STR = "EC2F9DD4-C694-4C2D-9EFB-092AA1F4BD94";
-    public const string NAME = "name";
-    public const string ID = "id";
-
-    #endregion
-
     public static ItemsList FavoritItems = new ItemsList();
     public List<FavoriteSetupInfo> FavoritList = new List<FavoriteSetupInfo>();
     public string SelectedId = "";
-
-    #region Propertys
-
-    private static readonly AbstractProperty _titelProperty = new WProperty(typeof(string), string.Empty);
-    private static readonly AbstractProperty _saveImage = new WProperty(typeof(string), string.Empty);
-
-    public AbstractProperty TitelProperty
-    {
-      get { return _titelProperty; }
-    }
-
-    public string SelectedTitel
-    {
-      get { return (string)_titelProperty.GetValue(); }
-      set { _titelProperty.SetValue(value); }
-    }
-
-    public AbstractProperty SaveImageProperty
-    {
-      get { return _saveImage; }
-    }
-
-    public string SaveImage
-    {
-      get { return (string)_saveImage.GetValue(); }
-      set { _saveImage.SetValue(value); }
-    }
-
-    #endregion
 
     /// <summary>
     /// Remove a Entry
@@ -96,16 +59,18 @@ namespace Webradio.Dialogues
     public void Rename()
     {
       if (SelectedId == "") return;
-      int id = 0;
-      foreach (FavoriteSetupInfo mf in FavoritList)
+      var id = 0;
+      foreach (var mf in FavoritList)
       {
         if (id == Convert.ToInt32(SelectedId))
         {
           mf.Titel = SelectedTitel;
           break;
         }
+
         id += 1;
       }
+
       ImportFavorits(false);
       SaveImage = "Unsaved.png";
     }
@@ -138,23 +103,17 @@ namespace Webradio.Dialogues
 
     private void ImportFavorits(bool read)
     {
-      if (read)
-      {
-        FavoritList = ServiceRegistration.Get<ISettingsManager>().Load<FavoritesSettings>().FavoritesSetupList;
-      }
+      if (read) FavoritList = ServiceRegistration.Get<ISettingsManager>().Load<FavoritesSettings>().FavoritesSetupList;
 
-      if (FavoritList == null)
-      {
-        FavoritList = new List<FavoriteSetupInfo> { new FavoriteSetupInfo("New Favorite", true, new List<string>()) };
-      }
+      if (FavoritList == null) FavoritList = new List<FavoriteSetupInfo> { new FavoriteSetupInfo("New Favorite", true, new List<string>()) };
       FillFavoritItems();
     }
 
     private void FillFavoritItems()
     {
       FavoritItems.Clear();
-      int id = 0;
-      foreach (FavoriteSetupInfo f in FavoritList)
+      var id = 0;
+      foreach (var f in FavoritList)
       {
         var item = new ListItem();
         item.AdditionalProperties[NAME] = f.Titel;
@@ -163,15 +122,44 @@ namespace Webradio.Dialogues
         id += 1;
         FavoritItems.Add(item);
       }
+
       FavoritItems.FireChange();
     }
 
+    #region Consts
+
+    public const string MODEL_ID_STR = "EC2F9DD4-C694-4C2D-9EFB-092AA1F4BD94";
+    public const string NAME = "name";
+    public const string ID = "id";
+
+    #endregion
+
+    #region Propertys
+
+    private static readonly AbstractProperty _titelProperty = new WProperty(typeof(string), string.Empty);
+    private static readonly AbstractProperty _saveImage = new WProperty(typeof(string), string.Empty);
+
+    public AbstractProperty TitelProperty => _titelProperty;
+
+    public string SelectedTitel
+    {
+      get => (string)_titelProperty.GetValue();
+      set => _titelProperty.SetValue(value);
+    }
+
+    public AbstractProperty SaveImageProperty => _saveImage;
+
+    public string SaveImage
+    {
+      get => (string)_saveImage.GetValue();
+      set => _saveImage.SetValue(value);
+    }
+
+    #endregion
+
     #region IWorkflowModel implementation
 
-    public Guid ModelId
-    {
-      get { return new Guid(MODEL_ID_STR); }
-    }
+    public Guid ModelId => new Guid(MODEL_ID_STR);
 
     public bool CanEnterState(NavigationContext oldContext, NavigationContext newContext)
     {

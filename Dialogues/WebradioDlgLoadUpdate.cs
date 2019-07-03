@@ -1,7 +1,7 @@
-﻿#region Copyright (C) 2007-2013 Team MediaPortal
+﻿#region Copyright (C) 2007-2019 Team MediaPortal
 
 /*
-    Copyright (C) 2007-2013 Team MediaPortal
+    Copyright (C) 2007-2019 Team MediaPortal
     http://www.team-mediaportal.com
 
     This file is part of MediaPortal 2
@@ -39,50 +39,11 @@ namespace Webradio.Dialogues
 {
   public class WebradioDlgLoadUpdate : IWorkflowModel
   {
-    #region Consts
-
-    public const string MODEL_ID_STR = "028ABECD-9885-48F6-B39F-F252EC0115EF";
-
-    protected const string DOWNLOAD_COMPLETE = "[Webradio.Dialog.LoadUpdate.DownloadComplete]";
-    protected const string DOWNLOAD_ERROR = "[Webradio.Dialog.LoadUpdate.DownloadError]";
-
-    #endregion
-
-    #region Propertys
-
-    private static AbstractProperty _updateProgressProperty = new WProperty(typeof(int), 0);
-
-    public AbstractProperty UpdateProgressProperty
-    {
-      get { return _updateProgressProperty; }
-    }
-
-    public static int UpdateProgress
-    {
-      get { return (int)_updateProgressProperty.GetValue(); }
-      set { _updateProgressProperty.SetValue(value); }
-    }
-
-    private static AbstractProperty _infoProperty = new WProperty(typeof(string), string.Empty);
-
-    public AbstractProperty InfoProperty
-    {
-      get { return _infoProperty; }
-    }
-
-    public static string Info
-    {
-      get { return (string)_infoProperty.GetValue(); }
-      set { _infoProperty.SetValue(value); }
-    }
-
-    #endregion
-
     public static void LoadSenderListe()
     {
       try
       {
-        WebClient webclient1 = new WebClient();
+        var webclient1 = new WebClient();
         webclient1.DownloadFileCompleted += DownloadCompleted;
         webclient1.DownloadProgressChanged += DownloadStatusChanged;
         webclient1.DownloadFileAsync(new Uri(StreamlistUpdate.StreamlistServerPath), StreamlistUpdate.StreamListFile);
@@ -95,12 +56,12 @@ namespace Webradio.Dialogues
 
     public static void Finish()
     {
-      WebradioHome homeModel = ServiceRegistration.Get<IWorkflowManager>().GetModel(WebradioHome.MODEL_ID) as WebradioHome;
+      var homeModel = ServiceRegistration.Get<IWorkflowManager>().GetModel(WebradioHome.MODEL_ID) as WebradioHome;
       if (homeModel == null)
         return;
 
       ServiceRegistration.Get<IScreenManager>().CloseTopmostDialog();
-      homeModel.Init();     
+      homeModel.Init();
     }
 
     private static void DownloadCompleted(object sender, AsyncCompletedEventArgs e)
@@ -114,12 +75,42 @@ namespace Webradio.Dialogues
       UpdateProgress = e.ProgressPercentage;
     }
 
+    #region Consts
+
+    public const string MODEL_ID_STR = "028ABECD-9885-48F6-B39F-F252EC0115EF";
+
+    protected const string DOWNLOAD_COMPLETE = "[Webradio.Dialog.LoadUpdate.DownloadComplete]";
+    protected const string DOWNLOAD_ERROR = "[Webradio.Dialog.LoadUpdate.DownloadError]";
+
+    #endregion
+
+    #region Propertys
+
+    private static readonly AbstractProperty _updateProgressProperty = new WProperty(typeof(int), 0);
+
+    public AbstractProperty UpdateProgressProperty => _updateProgressProperty;
+
+    public static int UpdateProgress
+    {
+      get => (int)_updateProgressProperty.GetValue();
+      set => _updateProgressProperty.SetValue(value);
+    }
+
+    private static readonly AbstractProperty _infoProperty = new WProperty(typeof(string), string.Empty);
+
+    public AbstractProperty InfoProperty => _infoProperty;
+
+    public static string Info
+    {
+      get => (string)_infoProperty.GetValue();
+      set => _infoProperty.SetValue(value);
+    }
+
+    #endregion
+
     #region IWorkflowModel implementation
 
-    public Guid ModelId
-    {
-      get { return new Guid(MODEL_ID_STR); }
-    }
+    public Guid ModelId => new Guid(MODEL_ID_STR);
 
     public bool CanEnterState(NavigationContext oldContext, NavigationContext newContext)
     {

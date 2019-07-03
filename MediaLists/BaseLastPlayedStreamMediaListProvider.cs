@@ -22,43 +22,32 @@
 
 #endregion
 
+using MediaPortal.Common.UserProfileDataManagement;
+using MediaPortal.UiComponents.Media.MediaLists;
 using System.Collections.Generic;
-using MediaPortal.Common.Settings;
+using System.Linq;
+using System.Threading.Tasks;
 using Webradio.Helper;
+using Webradio.Models;
 
-namespace Webradio.Settings
+namespace Webradio.MediaLists
 {
-  /// <summary>
-  /// Filter settings class.
-  /// </summary>
-  public class FilterSettings
+  public class BaseLastPlayedStreamMediaListProvider : WebradioMediaListProviderBase
   {
-    /// <summary>
-    /// Constructor
-    /// </summary>
-    public FilterSettings()
+    protected ICollection<MyStream> _lastStreams = new List<MyStream>();
+
+    public override async Task<bool> UpdateItemsAsync(int maxItems, UpdateReason updateReason)
     {
-      FilterSetupList = new List<FilterSetupInfo>();
+      if (!updateReason.HasFlag(UpdateReason.Forced) && !updateReason.HasFlag(UpdateReason.PlaybackComplete))
+        return true;
+
+      //todo
+      _lastStreams.Add(WebradioHome.StreamList[0]);
+      _lastStreams.Add(WebradioHome.StreamList[1]);
+      _lastStreams.Add(WebradioHome.StreamList[2]);
+
+      _allItems.FireChange();
+      return true;
     }
-
-    /// <summary>
-    /// Constructor
-    /// </summary>
-    public FilterSettings(List<FilterSetupInfo> list)
-    {
-      FilterSetupList = list;
-    }
-
-    /// <summary>
-    /// The Active Filter
-    /// </summary>
-    [Setting(SettingScope.User, null)]
-    public FilterSetupInfo ActiveFilter { get; set; } = null;
-
-    /// <summary>
-    /// List of all Filter
-    /// </summary>
-    [Setting(SettingScope.User, null)]
-    public List<FilterSetupInfo> FilterSetupList { get; set; }
   }
 }

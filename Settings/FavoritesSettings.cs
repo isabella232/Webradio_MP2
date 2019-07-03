@@ -1,7 +1,7 @@
-﻿#region Copyright (C) 2007-2013 Team MediaPortal
+﻿#region Copyright (C) 2007-2019 Team MediaPortal
 
 /*
-    Copyright (C) 2007-2013 Team MediaPortal
+    Copyright (C) 2007-2019 Team MediaPortal
     http://www.team-mediaportal.com
 
     This file is part of MediaPortal 2
@@ -24,7 +24,6 @@
 
 using System.Collections.Generic;
 using MediaPortal.Common.Settings;
-using Webradio.Helper;
 
 namespace Webradio.Settings
 {
@@ -58,9 +57,9 @@ namespace Webradio.Settings
 
   public class FavoriteSetupInfo
   {
-    public string Titel;
     public bool Active;
     public List<string> StreamUrls;
+    public string Titel;
 
     public FavoriteSetupInfo()
     {

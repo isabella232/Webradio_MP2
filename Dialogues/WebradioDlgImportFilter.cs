@@ -1,7 +1,7 @@
-﻿#region Copyright (C) 2007-2013 Team MediaPortal
+﻿#region Copyright (C) 2007-2019 Team MediaPortal
 
 /*
-    Copyright (C) 2007-2013 Team MediaPortal
+    Copyright (C) 2007-2019 Team MediaPortal
     http://www.team-mediaportal.com
 
     This file is part of MediaPortal 2
@@ -28,28 +28,20 @@ using System.Linq;
 using MediaPortal.UI.Presentation.DataObjects;
 using MediaPortal.UI.Presentation.Models;
 using MediaPortal.UI.Presentation.Workflow;
-using Webradio.Helper;
 using Webradio.Models;
 
 namespace Webradio.Dialogues
 {
   internal class WebradioDlgImportFilter : IWorkflowModel
   {
-    #region Consts
-
-    public const string MODEL_ID_STR = "10D0E2AB-AE84-406F-8AA9-5A3FB2A86360";
-    public const string NAME = "name";
-
-    #endregion
-
     public ItemsList FilterItems = new ItemsList();
 
     public void ImportFilter()
     {
       FilterItems.Clear();
-      foreach (FilterSetupInfo f in WebradioFilter.FilterList)
+      foreach (var f in WebradioFilter.FilterList)
       {
-        ListItem item = new ListItem();
+        var item = new ListItem();
         item.AdditionalProperties[NAME] = f.Titel;
         item.SetLabel("Name", f.Titel);
         FilterItems.Add(item);
@@ -61,18 +53,19 @@ namespace Webradio.Dialogues
     /// </summary>
     public void SelectedFilter(ListItem item)
     {
-      foreach (FilterSetupInfo f in WebradioFilter.FilterList.Where(f => f.Titel == (string)item.AdditionalProperties[NAME]))
-      {
-        WebradioFilter.SetFilter(f);
-      }
+      foreach (var f in WebradioFilter.FilterList.Where(f => f.Titel == (string)item.AdditionalProperties[NAME])) WebradioFilter.SetFilter(f);
     }
+
+    #region Consts
+
+    public const string MODEL_ID_STR = "10D0E2AB-AE84-406F-8AA9-5A3FB2A86360";
+    public const string NAME = "name";
+
+    #endregion
 
     #region IWorkflowModel implementation
 
-    public Guid ModelId
-    {
-      get { return new Guid(MODEL_ID_STR); }
-    }
+    public Guid ModelId => new Guid(MODEL_ID_STR);
 
     public bool CanEnterState(NavigationContext oldContext, NavigationContext newContext)
     {

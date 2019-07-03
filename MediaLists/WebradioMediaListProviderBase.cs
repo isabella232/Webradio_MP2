@@ -22,43 +22,23 @@
 
 #endregion
 
-using System.Collections.Generic;
-using MediaPortal.Common.Settings;
-using Webradio.Helper;
+using MediaPortal.UI.Presentation.DataObjects;
+using MediaPortal.UiComponents.Media.MediaLists;
+using System.Threading.Tasks;
 
-namespace Webradio.Settings
+namespace Webradio.MediaLists
 {
-  /// <summary>
-  /// Filter settings class.
-  /// </summary>
-  public class FilterSettings
+  public abstract class WebradioMediaListProviderBase : IMediaListProvider
   {
-    /// <summary>
-    /// Constructor
-    /// </summary>
-    public FilterSettings()
+    protected ItemsList _allItems;
+
+    protected WebradioMediaListProviderBase()
     {
-      FilterSetupList = new List<FilterSetupInfo>();
+      _allItems = new ItemsList();
     }
 
-    /// <summary>
-    /// Constructor
-    /// </summary>
-    public FilterSettings(List<FilterSetupInfo> list)
-    {
-      FilterSetupList = list;
-    }
+    public ItemsList AllItems => _allItems;
 
-    /// <summary>
-    /// The Active Filter
-    /// </summary>
-    [Setting(SettingScope.User, null)]
-    public FilterSetupInfo ActiveFilter { get; set; } = null;
-
-    /// <summary>
-    /// List of all Filter
-    /// </summary>
-    [Setting(SettingScope.User, null)]
-    public List<FilterSetupInfo> FilterSetupList { get; set; }
+    public abstract Task<bool> UpdateItemsAsync(int maxItems, UpdateReason updateReason);
   }
 }
