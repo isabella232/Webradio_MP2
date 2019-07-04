@@ -42,9 +42,20 @@ namespace Webradio.MediaLists
         return true;
 
       //todo
-      _lastStreams.Add(WebradioHome.StreamList[0]);
-      _lastStreams.Add(WebradioHome.StreamList[1]);
-      _lastStreams.Add(WebradioHome.StreamList[2]);
+      var ms = MyStreams.Read(StreamlistUpdate.StreamListFile);
+      
+
+
+      _lastStreams.Add(ms.Streams[0]);
+      _lastStreams.Add(ms.Streams[1]);
+      _lastStreams.Add(ms.Streams[2]);
+
+      lock (_allItems.SyncRoot)
+      {
+        _allItems.Clear();
+        foreach (MyStream stream in _lastStreams)
+          _allItems.Add(CreateStreamItem(stream));
+      }
 
       _allItems.FireChange();
       return true;

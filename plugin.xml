@@ -115,7 +115,7 @@
 
   <Register Location="/Media/MediaListProviders">
     <!--Last Played media lists-->
-    <MediaListProviderBuilder Id="{F13D7D71-1F91-40BB-BE0C-30E8B4F19EDA}" Key="LastPlayRadio" ClassName="Webradio.MediaLists.WebradioLastPlayedStreamMediaListProvider"/>
+    <MediaListProviderBuilder Id="{F13D7D71-1F91-40BB-BE0C-30E8B4F19EDA}" Key="LastPlayWebradio" ClassName="Webradio.MediaLists.WebradioLastPlayedStreamMediaListProvider"/>
   </Register>
 
     <Register Location="/Resources/Skin">

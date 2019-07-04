@@ -25,6 +25,8 @@
 using MediaPortal.UI.Presentation.DataObjects;
 using MediaPortal.UiComponents.Media.MediaLists;
 using System.Threading.Tasks;
+using MediaPortal.Common.Commands;
+using Webradio.Helper;
 
 namespace Webradio.MediaLists
 {
@@ -40,5 +42,12 @@ namespace Webradio.MediaLists
     public ItemsList AllItems => _allItems;
 
     public abstract Task<bool> UpdateItemsAsync(int maxItems, UpdateReason updateReason);
+
+    protected ListItem CreateStreamItem(MyStream stream)
+    {
+      var item = new ListItem { AdditionalProperties = { ["StreamUrl"] = stream.StreamUrls[0].StreamUrl } };
+      item.SetLabel("Name", stream.Title);
+      return item;
+    }
   }
 }
