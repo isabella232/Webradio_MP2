@@ -305,7 +305,7 @@
         <BindingWrapper>
           <BindingWrapper.Binding>
             <MultiBinding Converter="{StaticResource ExpressionMultiValueConverter}" ConverterParameter="{}{0} == {LayoutType}.{ListLayout} ? {1} : {2}">
-              <Binding Source="{StaticResource ViewModeModel}" Path="LayoutType"/>
+              <Binding Source="{StaticResource GenericViewModeModel}" Path="LayoutType"/>
               <Binding Source="{ThemeResource WebRadioListItemDataTemplate}"/>
               <Binding Source="{ThemeResource WebRadioGridItemDataTemplate}"/>
             </MultiBinding>
@@ -318,7 +318,7 @@
         <BindingWrapper>
           <BindingWrapper.Binding>
             <MultiBinding Converter="{StaticResource ExpressionMultiValueConverter}" ConverterParameter="{}{0} == {LayoutType}.{ListLayout} ? {1} : {2}">
-              <Binding Source="{StaticResource ViewModeModel}" Path="LayoutType"/>
+              <Binding Source="{StaticResource GenericViewModeModel}" Path="LayoutType"/>
               <Binding Source="{ThemeResource WebRadioListItemContainerStyle}"/>
               <Binding Source="{ThemeResource WebRadioGridItemContainerStyle}"/>
             </MultiBinding>
@@ -331,7 +331,7 @@
         <BindingWrapper>
           <BindingWrapper.Binding>
             <MultiBinding Converter="{StaticResource ExpressionMultiValueConverter}" ConverterParameter="{}{0} == {LayoutType}.{ListLayout} ? {1} : {2}">
-              <Binding Source="{StaticResource ViewModeModel}" Path="LayoutType"/>
+              <Binding Source="{StaticResource GenericViewModeModel}" Path="LayoutType"/>
               <!-- List layout -->
               <Binding>
                 <Binding.Source>
