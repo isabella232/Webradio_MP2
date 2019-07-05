@@ -26,6 +26,7 @@ using MediaPortal.UI.Presentation.DataObjects;
 using MediaPortal.UiComponents.Media.MediaLists;
 using System.Threading.Tasks;
 using MediaPortal.Common.Commands;
+using MediaPortal.UiComponents.Media.Models.Navigation;
 using Webradio.Helper;
 
 namespace Webradio.MediaLists
@@ -45,8 +46,12 @@ namespace Webradio.MediaLists
 
     protected ListItem CreateStreamItem(MyStream stream)
     {
-      var item = new ListItem { AdditionalProperties = { ["StreamUrl"] = stream.StreamUrls[0].StreamUrl } };
-      item.SetLabel("Name", stream.Title);
+      VideoAudioStreamItem item = new VideoAudioStreamItem {AdditionalProperties = { ["Title"] = stream.Title}};
+      item.Language = stream.Language;
+      item.AudioEncoding = "128";
+
+      //var item = new ListItem { AdditionalProperties = { ["StreamUrl"] = stream.StreamUrls[0].StreamUrl } };
+      //item.SetLabel("Name", stream.Title);
       return item;
     }
   }
