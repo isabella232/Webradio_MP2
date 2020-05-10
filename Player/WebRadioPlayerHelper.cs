@@ -34,6 +34,7 @@ using MediaPortal.Common.MediaManagement.DefaultItemAspects;
 using MediaPortal.Common.PathManager;
 using MediaPortal.Common.Services.ResourceAccess.RawUrlResourceProvider;
 using MediaPortal.Common.SystemResolver;
+using MediaPortal.Extensions.BassLibraries;
 using MediaPortal.UI.Presentation.Players;
 using MediaPortal.UI.Presentation.Workflow;
 using MediaPortal.UiComponents.Media.Models;
@@ -45,8 +46,14 @@ namespace Webradio.Player
   internal class WebRadioPlayerHelper
   {
     public const string WEBRADIO_MIMETYPE = "webradio/stream";
+    protected static BassLibraryManager _lib;
 
     public static string StatusCode { get; private set; } = "Ok";
+
+    static WebRadioPlayerHelper()
+    {
+      _lib = BassLibraryManager.Get();
+    }
 
     /// <summary>
     /// Constructs a dynamic <see cref="MediaItem"/> that contains the URL for the given <paramref name="stream"/> and starts

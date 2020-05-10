@@ -22,16 +22,15 @@
 
 #endregion
 
+using MediaPortal.UI.ContentLists;
 using MediaPortal.UI.Presentation.DataObjects;
-using MediaPortal.UiComponents.Media.MediaLists;
-using System.Threading.Tasks;
-using MediaPortal.Common.Commands;
 using MediaPortal.UiComponents.Media.Models.Navigation;
+using System.Threading.Tasks;
 using Webradio.Helper;
 
 namespace Webradio.MediaLists
 {
-  public abstract class WebradioMediaListProviderBase : IMediaListProvider
+  public abstract class WebradioMediaListProviderBase : IContentListProvider
   {
     protected ItemsList _allItems;
 

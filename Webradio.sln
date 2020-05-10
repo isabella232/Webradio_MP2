@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30002.166
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webradio", "Webradio.csproj", "{638A8216-5E7A-4CA8-A8B7-A4D25E7DE2B4}"
 EndProject
@@ -11,12 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{638A8216-5E7A-4CA8-A8B7-A4D25E7DE2B4}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{638A8216-5E7A-4CA8-A8B7-A4D25E7DE2B4}.Debug|Any CPU.Build.0 = Debug|x86
-		{638A8216-5E7A-4CA8-A8B7-A4D25E7DE2B4}.Release|Any CPU.ActiveCfg = Release|x86
-		{638A8216-5E7A-4CA8-A8B7-A4D25E7DE2B4}.Release|Any CPU.Build.0 = Release|x86
+		{638A8216-5E7A-4CA8-A8B7-A4D25E7DE2B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{638A8216-5E7A-4CA8-A8B7-A4D25E7DE2B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{638A8216-5E7A-4CA8-A8B7-A4D25E7DE2B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{638A8216-5E7A-4CA8-A8B7-A4D25E7DE2B4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8E14C2F0-E0BC-49C8-BD07-1E1654E99B8C}
 	EndGlobalSection
 EndGlobal

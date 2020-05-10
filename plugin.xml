@@ -19,10 +19,8 @@
   <DependsOn>
     <CoreDependency Name="MediaPortal.Common" CompatibleAPI="2" />
     <CoreDependency Name="MediaPortal.UI" CompatibleAPI="2" />
-    <PluginReference PluginId="{1AFF4467-64B0-4ca1-AF28-9AEDF3525BCE}" CompatibleAPI="1" />
-    <!-- ConfigurationManager -->
-    <PluginReference PluginId="{B765A4B6-F455-4941-BDAE-2CE45208BFEB}" CompatibleAPI="1" />
-    <!-- Configuration plugin -->
+    <PluginReference PluginId="{1AFF4467-64B0-4ca1-AF28-9AEDF3525BCE}" CompatibleAPI="1" /> <!-- ConfigurationManager -->
+    <PluginReference PluginId="{B765A4B6-F455-4941-BDAE-2CE45208BFEB}" CompatibleAPI="1" /> <!-- Configuration plugin -->
     <PluginReference PluginId="{5D239050-02B8-4f58-8301-7630A1C4CF85}" CompatibleAPI="1" /> <!-- SkinBase -->
     <PluginReference PluginId="{9886EB43-B3EB-4cf1-A979-8D4D8874C555}" CompatibleAPI="1" /> <!-- BassPlayer -->
     <PluginReference PluginId="{15FB35F7-8C85-4404-BC67-BFF28446158A}" CompatibleAPI="2" /> <!-- Media -->
@@ -115,10 +113,10 @@
 
   <Register Location="/Media/MediaListProviders">
     <!--Last Played media lists-->
-    <MediaListProviderBuilder Id="{F13D7D71-1F91-40BB-BE0C-30E8B4F19EDA}" Key="LastPlayWebradio" ClassName="Webradio.MediaLists.WebradioLastPlayedStreamMediaListProvider"/>
+    <ContentList Id="{F13D7D71-1F91-40BB-BE0C-30E8B4F19EDA}" Key="LastPlayWebradio" ClassName="Webradio.MediaLists.WebradioLastPlayedStreamMediaListProvider"/>
   </Register>
 
-    <Register Location="/Resources/Skin">
+  <Register Location="/Resources/Skin">
     <Resource Id="WebradioSkin" Directory="Skin" Type="Skin" />
   </Register>
 
