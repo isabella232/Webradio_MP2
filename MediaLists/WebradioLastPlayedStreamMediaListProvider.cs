@@ -23,10 +23,24 @@
 #endregion
 
 
+using System.Collections.Generic;
+using System.Linq;
+using MediaPortal.Common.UserProfileDataManagement;
+
 namespace Webradio.MediaLists
 {
   public class WebradioLastPlayedStreamMediaListProvider : BaseLastPlayedStreamMediaListProvider
   {
-
+    protected override List<string> GetStreamKeys(UsageStatistics statistics)
+    {
+      return statistics.LastUsed.Select(s => s.Name).Take(5).ToList();
+    }
+  }
+  public class WebradioTopPlayedStreamMediaListProvider : BaseLastPlayedStreamMediaListProvider
+  {
+    protected override List<string> GetStreamKeys(UsageStatistics statistics)
+    {
+      return statistics.TopUsed.Select(s => s.Name).Take(5).ToList();
+    }
   }
 }

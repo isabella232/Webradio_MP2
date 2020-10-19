@@ -34,9 +34,11 @@ using MediaPortal.Common.MediaManagement.DefaultItemAspects;
 using MediaPortal.Common.PathManager;
 using MediaPortal.Common.Services.ResourceAccess.RawUrlResourceProvider;
 using MediaPortal.Common.SystemResolver;
+using MediaPortal.Common.UserManagement;
 using MediaPortal.Extensions.BassLibraries;
 using MediaPortal.UI.Presentation.Players;
 using MediaPortal.UI.Presentation.Workflow;
+using MediaPortal.UI.Services.UserManagement;
 using MediaPortal.UiComponents.Media.Models;
 using Un4seen.Bass;
 using Webradio.Helper;
@@ -82,13 +84,16 @@ namespace Webradio.Player
         PlayItemsModel.PlayItem(mediaItem);
       }
 
+      _ = ServiceRegistration.Get<IUserManagement>().NotifyUsage("webradio", stream.Key);
+      // _ = ServiceRegistration.Get<IUserManagement>().NotifyUsage("webradio-country", stream.Country);
+
       return true;
     }
 
     /// <summary>
     /// Constructs a dynamic <see cref="MediaItem"/> that contains the URL for the given <paramref name="stream"/>.
     /// </summary>
-    private static MediaItem CreateStreamMediaItem(MyStream stream)
+    internal static MediaItem CreateStreamMediaItem(MyStream stream)
     {
       IDictionary<Guid, IList<MediaItemAspect>> aspects = new Dictionary<Guid, IList<MediaItemAspect>>();
 

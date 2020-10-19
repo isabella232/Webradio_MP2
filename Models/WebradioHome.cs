@@ -83,7 +83,8 @@ namespace Webradio.Models
 
       DefaultImage = "DefaultLogo.png";
       StreamlistUpdate.CheckUpdate();
-      var ms = MyStreams.Read(StreamlistUpdate.StreamListFile);
+      MyStreams.Reset();
+      var ms = MyStreams.Instance;
       StreamList = ms.Streams;
 
       FilterSettings = ServiceRegistration.Get<ISettingsManager>().Load<FilterSettings>();

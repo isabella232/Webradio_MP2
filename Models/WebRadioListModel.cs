@@ -1,7 +1,7 @@
-﻿#region Copyright (C) 2007-2013 Team MediaPortal
+#region Copyright (C) 2007-2018 Team MediaPortal
 
 /*
-    Copyright (C) 2007-2013 Team MediaPortal
+    Copyright (C) 2007-2018 Team MediaPortal
     http://www.team-mediaportal.com
 
     This file is part of MediaPortal 2
@@ -22,11 +22,26 @@
 
 #endregion
 
-using MediaPortal.Common.Configuration.ConfigurationClasses;
+using System;
+using MediaPortal.UI.Presentation.Models;
 
-namespace Webradio.Settings.Configuration
+namespace Webradio.Models
 {
-  class WebradioConfigFilters : CustomConfigSetting
+  public class WebRadioListModel : BaseContentListModel
   {
+    #region Consts
+
+    // Global ID definitions and references
+    public const string WEBRADIO_LIST_MODEL_ID_STR = "55623F9E-60EF-4C28-B835-F8E44D9549E7";
+
+    // ID variables
+    public static readonly Guid WEBRADIO_LIST_MODEL_ID = new Guid(WEBRADIO_LIST_MODEL_ID_STR);
+
+    #endregion
+
+    public WebRadioListModel() : base("/Content/WebradioListProviders")
+    {
+    }
+    protected override bool ServerConnectionRequired => false;
   }
 }

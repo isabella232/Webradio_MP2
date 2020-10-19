@@ -23,17 +23,57 @@
 #endregion
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
+using MediaPortal.Common;
+using MediaPortal.Common.PathManager;
 
 namespace Webradio.Helper
 {
   public class MyStreams
   {
+    private static MyStreams _instance;
+    private static IDictionary<string, MyStream> _instanceDictionary;
+    internal static readonly object Lock = new object();
+
+    public static MyStreams Instance
+    {
+      get { lock (Lock) return _instance ?? (_instance = MyStreams.Read(StreamlistUpdate.StreamListFile)); }
+    }
+
+    public static IDictionary<string, MyStream> InstanceDictionary
+    {
+      get
+      {
+        lock (Lock)
+        {
+          if (_instanceDictionary == null)
+          {
+            _instanceDictionary = new ConcurrentDictionary<string, MyStream>();
+            foreach (var myStream in Instance.Streams)
+            {
+              // This also overwrites duplicate entries, the last one wins.
+              _instanceDictionary[myStream.Key] = myStream;
+            }
+          }
+          return _instanceDictionary;
+        }
+      }
+    }
+
+    public static void Reset()
+    {
+      lock (Lock)
+      {
+        _instance = null;
+        _instanceDictionary = null;
+      }
+    }
+
     private static readonly XmlSerializer SERIALIZER = new XmlSerializer(typeof(MyStreams));
-    private static FileStream _fileStream;
     public List<MyStream> Streams = new List<MyStream>();
 
     public string Version = "1";
@@ -50,32 +90,14 @@ namespace Webradio.Helper
 
     public static void Write(string xmlFile, object obj)
     {
-      try
-      {
-        _fileStream = new FileStream(xmlFile, FileMode.Create);
-        SERIALIZER.Serialize(_fileStream, obj);
-      }
-      finally
-      {
-        _fileStream.Close();
-      }
+      using (FileStream fileStream = new FileStream(xmlFile, FileMode.Create, FileAccess.Write))
+        SERIALIZER.Serialize(fileStream, obj);
     }
 
     public static MyStreams Read(string xmlFile)
     {
-      MyStreams ms;
-
-      try
-      {
-        _fileStream = new FileStream(xmlFile, FileMode.Open);
-        ms = (MyStreams)SERIALIZER.Deserialize(_fileStream);
-      }
-      finally
-      {
-        _fileStream.Close();
-      }
-
-      return ms;
+      using (FileStream fileStream = new FileStream(xmlFile, FileMode.Open, FileAccess.ReadWrite))
+        return (MyStreams)SERIALIZER.Deserialize(fileStream);
     }
 
     public static List<MyStream> Filtered(FilterSetupInfo filter, List<MyStream> streams)
@@ -108,6 +130,15 @@ namespace Webradio.Helper
 
   public class MyStream
   {
+    /// <summary>
+    /// Gets an unique key to lookup a stream.
+    /// </summary>
+    [XmlIgnore]
+    public string Key
+    {
+      get { return $"{City}|{Country}|{Title}"; }
+    }
+
     [XmlAttribute("City")] public string City = string.Empty;
 
     [XmlAttribute("Country")] public string Country = string.Empty;

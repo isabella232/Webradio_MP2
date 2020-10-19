@@ -39,6 +39,14 @@
     <Model Id="10D0E2AB-AE84-406F-8AA9-5A3FB2A86360" ClassName="Webradio.Dialogues.WebradioDlgImportFilter" />
     <Model Id="028ABECD-9885-48F6-B39F-F252EC0115EF" ClassName="Webradio.Dialogues.WebradioDlgLoadUpdate" />
     <Model Id="A391ACBF-BEFE-4820-B17D-D06545CF9987" ClassName="Webradio.Dialogues.WebradioDlgSettingsStreamlistUpdate" />
+
+    <Model Id="55623F9E-60EF-4C28-B835-F8E44D9549E7" Name="WebradioListModel" ClassName="Webradio.Models.WebRadioListModel" />
+  </Register>
+
+  <Register Location="/Content/WebradioListProviders">
+    <!--Last Played media lists-->
+    <ContentList Id="F13D7D71-1F91-40BB-BE0C-30E8B4F19EDA" Key="LastPlayedWebradio" ClassName="Webradio.MediaLists.WebradioLastPlayedStreamMediaListProvider"/>
+    <ContentList Id="291228AC-C7E7-410B-8608-9F295494AF61" Key="TopPlayedWebradio" ClassName="Webradio.MediaLists.WebradioTopPlayedStreamMediaListProvider"/>
   </Register>
 
   <Register Location="/Players/Builders">
@@ -109,11 +117,6 @@
                  DialogScreen="webradio_dialogSettingsStreamlistUpdate"
                  DisplayLabel="[Webradio.Settings.Streamlistupdate]"
                  WorkflowModel="A391ACBF-BEFE-4820-B17D-D06545CF9987" />
-  </Register>
-
-  <Register Location="/Media/MediaListProviders">
-    <!--Last Played media lists-->
-    <ContentList Id="{F13D7D71-1F91-40BB-BE0C-30E8B4F19EDA}" Key="LastPlayWebradio" ClassName="Webradio.MediaLists.WebradioLastPlayedStreamMediaListProvider"/>
   </Register>
 
   <Register Location="/Resources/Skin">

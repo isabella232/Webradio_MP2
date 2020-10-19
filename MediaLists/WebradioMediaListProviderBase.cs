@@ -26,6 +26,9 @@ using MediaPortal.UI.ContentLists;
 using MediaPortal.UI.Presentation.DataObjects;
 using MediaPortal.UiComponents.Media.Models.Navigation;
 using System.Threading.Tasks;
+using MediaPortal.Common;
+using MediaPortal.Common.UserManagement;
+using MediaPortal.Common.UserProfileDataManagement;
 using Webradio.Helper;
 
 namespace Webradio.MediaLists
@@ -52,6 +55,15 @@ namespace Webradio.MediaLists
       //var item = new ListItem { AdditionalProperties = { ["StreamUrl"] = stream.StreamUrls[0].StreamUrl } };
       //item.SetLabel("Name", stream.Title);
       return item;
+    }
+
+
+    protected async Task<UsageStatistics> GetSiteStats()
+    {
+      IUserManagement userManagement = ServiceRegistration.Get<IUserManagement>();
+      if (userManagement.UserProfileDataManagement == null) return null;
+      UsageStatistics stats = await userManagement.UserProfileDataManagement.GetFeatureUsageStatisticsAsync(userManagement.CurrentUser.ProfileId, "webradio");
+      return stats;
     }
   }
 }

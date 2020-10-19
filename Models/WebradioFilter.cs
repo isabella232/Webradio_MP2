@@ -60,7 +60,7 @@ namespace Webradio.Models
     {
       StreamList = WebradioHome.StreamList;
 
-      if (StreamList.Count == 0) StreamList = MyStreams.Read(StreamlistUpdate.StreamListFile).Streams;
+      if (StreamList.Count == 0) StreamList = MyStreams.Instance.Streams;
 
       foreach (var ms in StreamList)
       {

@@ -51,29 +51,24 @@ namespace Webradio.Helper
     {
       var request = WebRequest.Create(StreamlistServerPath);
       request.Credentials = CredentialCache.DefaultCredentials;
-      WebResponse response = null;
-      StreamReader reader = null;
 
       try
       {
-        response = request.GetResponse();
-        reader = new StreamReader(response.GetResponseStream());
-        var buffer = new char[200];
-        reader.Read(buffer, 0, 200);
+        using (var response = request.GetResponse())
+        using (var reader = new StreamReader(response.GetResponseStream()))
+        {
+          var buffer = new char[200];
+          reader.Read(buffer, 0, 200);
 
-        var s = new string(buffer);
-        var a = s.IndexOf("<Version>", StringComparison.Ordinal) + 9;
-        var b = s.IndexOf("</Version>", StringComparison.Ordinal);
-        return Convert.ToInt32(s.Substring(a, b - a));
+          var s = new string(buffer);
+          var a = s.IndexOf("<Version>", StringComparison.Ordinal) + 9;
+          var b = s.IndexOf("</Version>", StringComparison.Ordinal);
+          return Convert.ToInt32(s.Substring(a, b - a));
+        }
       }
       catch (Exception ex)
       {
         return -1;
-      }
-      finally
-      {
-        if (reader != null) reader.Close();
-        if (response != null) response.Close();
       }
     }
 
@@ -83,7 +78,7 @@ namespace Webradio.Helper
 
       try
       {
-        var ms = MyStreams.Read(StreamListFile);
+        var ms = MyStreams.Instance;
         return Convert.ToInt32(ms.Version);
       }
       catch (Exception)

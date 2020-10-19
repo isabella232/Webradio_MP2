@@ -27,39 +27,48 @@ using MediaPortal.UiComponents.Media.MediaLists;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MediaPortal.Common;
+using MediaPortal.Common.Logging;
 using MediaPortal.UI.ContentLists;
+using MediaPortal.UiComponents.Media.Models.Navigation;
 using Webradio.Helper;
 using Webradio.Models;
+using Webradio.Player;
 
 namespace Webradio.MediaLists
 {
-  public class BaseLastPlayedStreamMediaListProvider : WebradioMediaListProviderBase
+  public abstract class BaseLastPlayedStreamMediaListProvider : WebradioMediaListProviderBase
   {
-    protected ICollection<MyStream> _lastStreams = new List<MyStream>();
 
     public override async Task<bool> UpdateItemsAsync(int maxItems, UpdateReason updateReason)
     {
-      if (!updateReason.HasFlag(UpdateReason.Forced) && !updateReason.HasFlag(UpdateReason.PlaybackComplete))
+      if (!updateReason.HasFlag(UpdateReason.Forced) && !updateReason.HasFlag(UpdateReason.PlaybackComplete) && !updateReason.HasFlag(UpdateReason.UserChanged))
         return true;
 
-      //todo
-      var ms = MyStreams.Read(StreamlistUpdate.StreamListFile);
-      
+      ICollection<MyStream> lastStreams = new List<MyStream>();
 
+      var stats = await GetSiteStats();
 
-      _lastStreams.Add(ms.Streams[0]);
-      _lastStreams.Add(ms.Streams[1]);
-      _lastStreams.Add(ms.Streams[2]);
-
-      lock (_allItems.SyncRoot)
+      lock (MyStreams.Lock)
       {
-        _allItems.Clear();
-        foreach (MyStream stream in _lastStreams)
-          _allItems.Add(CreateStreamItem(stream));
+        var streams = MyStreams.InstanceDictionary;
+        foreach (var streamKey in GetStreamKeys(stats))
+        {
+          if (streams.TryGetValue(streamKey, out var stream))
+          {
+            lastStreams.Add(stream);
+          }
+        }
       }
 
+      _allItems.Clear();
+      foreach (MyStream stream in lastStreams)
+        _allItems.Add(new AudioItem(WebRadioPlayerHelper.CreateStreamMediaItem(stream)));
       _allItems.FireChange();
+
       return true;
     }
+
+    protected abstract List<string> GetStreamKeys(UsageStatistics statistics);
   }
 }

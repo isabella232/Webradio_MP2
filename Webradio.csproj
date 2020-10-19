@@ -95,6 +95,7 @@
     <Compile Include="MediaLists\BaseLastPlayedStreamMediaListProvider.cs" />
     <Compile Include="MediaLists\WebradioLastPlayedStreamMediaListProvider.cs" />
     <Compile Include="MediaLists\WebradioMediaListProviderBase.cs" />
+    <Compile Include="Models\WebRadioListModel.cs" />
     <Compile Include="Models\WebradioFilter.cs" />
     <Compile Include="Models\WebradioHome.cs" />
     <Compile Include="Player\WebRadioBassPlayer.cs" />
@@ -112,7 +113,6 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Data\StreamList.xml" />
     <Content Include="Language\strings_de.xml" />
     <Content Include="Language\strings_en.xml">
       <SubType>Designer</SubType>
