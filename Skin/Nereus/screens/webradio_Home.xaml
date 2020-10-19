@@ -136,7 +136,7 @@
                 <Image.OpacityMask>
                   <VisualBrush>
                     <VisualBrush.Visual>
-                      <Border Name="mask" Background="White" CornerRadius="25" BorderThickness="0" BorderBrush="Black" Margin="4"/>
+                      <Border Name="mask" Background="White" CornerRadius="35" BorderThickness="0" BorderBrush="Black" Margin="4"/>
                     </VisualBrush.Visual>
                   </VisualBrush>
                 </Image.OpacityMask>

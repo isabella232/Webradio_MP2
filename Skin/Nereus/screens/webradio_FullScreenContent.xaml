@@ -115,8 +115,8 @@
                VerticalAlignment="Top" HorizontalAlignment="Stretch" Wrap="True" TextTrimming="WordEllipsis"
                Content="{Binding Source={StaticResource Model}, Path=PlayerUIContributor.ArtistBio}" />
         
-        <mp_audio_viz:AudioSpectrumAnalyzer Grid.Row="2" Grid.ColumnSpan="3" Width="1900" Height="280"
-                HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,-260,0,0"
+        <mp_audio_viz:AudioSpectrumAnalyzer Grid.Row="2" Grid.ColumnSpan="3" Height="280"
+                HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,-260,0,0"
                 x:Name="SpectrumAnalyzer" Style="{ThemeResource SpectrumAnalyzerStyle}"/>
 
         <mp_special_controls:PlayerControl x:Name="PrimaryOSD" Grid.Row="2" Grid.Column="2"
