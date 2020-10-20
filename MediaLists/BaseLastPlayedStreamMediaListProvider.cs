@@ -22,16 +22,11 @@
 
 #endregion
 
-using MediaPortal.Common.UserProfileDataManagement;
-using MediaPortal.UiComponents.Media.MediaLists;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using MediaPortal.Common;
 using MediaPortal.Common.Commands;
-using MediaPortal.Common.Logging;
+using MediaPortal.Common.UserProfileDataManagement;
 using MediaPortal.UI.ContentLists;
-using MediaPortal.UiComponents.Media.Models.Navigation;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Webradio.Helper;
 using Webradio.Models;
 using Webradio.Player;
@@ -65,8 +60,7 @@ namespace Webradio.MediaLists
       _allItems.Clear();
       foreach (MyStream stream in lastStreams)
       {
-        var item = new AudioItem(WebRadioPlayerHelper.CreateStreamMediaItem(stream));
-        WebradioHome.SetListItemProperties(stream, item);
+        var item = WebradioHome.CreateStreamListItem(stream);
         item.Command = new AsyncMethodDelegateCommand(async () => WebRadioPlayerHelper.PlayStream(stream));
         _allItems.Add(item);
       }
