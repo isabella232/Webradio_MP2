@@ -112,29 +112,41 @@ namespace Webradio.Models
       {
         indx += 1;
         SetFallbackValues(ms);
-        var item = new ListItem { AdditionalProperties = { [STREAM_URL] = ms.StreamUrls[0].StreamUrl } };
-        item.SetLabel("Name", ms.Title);
-        item.SetLabel("Country", "[Country." + ms.Country + "]");
-        item.SetLabel("CountryCode", ms.Country);
-        item.SetLabel("City", ms.City);
-        item.SetLabel("Genres", ms.Genres);
-        item.SetLabel("Bitrate", ms.StreamUrls[0].Bitrate);
-        item.SetLabel("StreamProvider", ms.StreamUrls[0].Provider);
-        item.SetLabel("StreamFrequenz", ms.StreamUrls[0].Frequenz);
-        item.SetLabel("StreamMode", ms.StreamUrls[0].Mode);
-        item.SetLabel("StreamName", ms.StreamUrls[0].Name);
-        item.SetLabel("StreamTyp", ms.StreamUrls[0].Typ);
-        item.SetLabel("Logo", SetStreamLogo(ms));
-        item.SetLabel("ImageSrc", SetStreamLogo(ms));
-        item.SetLabel("Description", SetStreamDescription(ms));
-        item.SetLabel("Language", "[Language." + ms.Language + "]");
-        item.SetLabel("LanguageCode", ms.Language);
+        var item = CreateStreamListItem(ms);
         item.SetLabel("Indx", indx + "/" + list.Count);
-
         AllRadioStreams.Add(item);
       }
 
       AllRadioStreams.FireChange();
+    }
+
+    public static ListItem CreateStreamListItem(MyStream ms)
+    {
+      var item = new ListItem();
+      SetListItemProperties(ms, item);
+      return item;
+    }
+
+    public static void SetListItemProperties(MyStream ms, ListItem item)
+    {
+      var streamUrl = ms.StreamUrls[0];
+      item.AdditionalProperties[STREAM_URL] = streamUrl.StreamUrl;
+      item.SetLabel("Name", ms.Title);
+      item.SetLabel("Country", "[Country." + ms.Country + "]");
+      item.SetLabel("CountryCode", ms.Country);
+      item.SetLabel("City", ms.City);
+      item.SetLabel("Genres", ms.Genres);
+      item.SetLabel("Bitrate", streamUrl.Bitrate);
+      item.SetLabel("StreamProvider", streamUrl.Provider);
+      item.SetLabel("StreamFrequenz", streamUrl.Frequenz);
+      item.SetLabel("StreamMode", streamUrl.Mode);
+      item.SetLabel("StreamName", streamUrl.Name);
+      item.SetLabel("StreamTyp", streamUrl.Typ);
+      item.SetLabel("Logo", SetStreamLogo(ms));
+      item.SetLabel("ImageSrc", SetStreamLogo(ms));
+      item.SetLabel("Description", SetStreamDescription(ms));
+      item.SetLabel("Language", "[Language." + ms.Language + "]");
+      item.SetLabel("LanguageCode", ms.Language);
     }
 
     /// <summary>

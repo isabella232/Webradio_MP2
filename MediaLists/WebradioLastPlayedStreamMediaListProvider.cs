@@ -33,14 +33,14 @@ namespace Webradio.MediaLists
   {
     protected override List<string> GetStreamKeys(UsageStatistics statistics)
     {
-      return statistics.LastUsed.Select(s => s.Name).Take(5).ToList();
+      return statistics?.LastUsed == null ? new List<string>() : statistics.LastUsed.Select(s => s.Name).Take(5).ToList();
     }
   }
   public class WebradioTopPlayedStreamMediaListProvider : BaseLastPlayedStreamMediaListProvider
   {
     protected override List<string> GetStreamKeys(UsageStatistics statistics)
     {
-      return statistics.TopUsed.Select(s => s.Name).Take(5).ToList();
+      return statistics?.TopUsed == null ? new List<string>() : statistics.TopUsed.Select(s => s.Name).Take(5).ToList();
     }
   }
 }

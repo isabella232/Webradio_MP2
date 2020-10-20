@@ -28,6 +28,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MediaPortal.Common;
+using MediaPortal.Common.Commands;
 using MediaPortal.Common.Logging;
 using MediaPortal.UI.ContentLists;
 using MediaPortal.UiComponents.Media.Models.Navigation;
@@ -63,7 +64,13 @@ namespace Webradio.MediaLists
 
       _allItems.Clear();
       foreach (MyStream stream in lastStreams)
-        _allItems.Add(new AudioItem(WebRadioPlayerHelper.CreateStreamMediaItem(stream)));
+      {
+        var item = new AudioItem(WebRadioPlayerHelper.CreateStreamMediaItem(stream));
+        WebradioHome.SetListItemProperties(stream, item);
+        item.Command = new AsyncMethodDelegateCommand(async () => WebRadioPlayerHelper.PlayStream(stream));
+        _allItems.Add(item);
+      }
+
       _allItems.FireChange();
 
       return true;
