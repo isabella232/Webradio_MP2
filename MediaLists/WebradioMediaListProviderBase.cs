@@ -22,14 +22,12 @@
 
 #endregion
 
-using MediaPortal.UI.ContentLists;
-using MediaPortal.UI.Presentation.DataObjects;
-using MediaPortal.UiComponents.Media.Models.Navigation;
-using System.Threading.Tasks;
 using MediaPortal.Common;
 using MediaPortal.Common.UserManagement;
 using MediaPortal.Common.UserProfileDataManagement;
-using Webradio.Helper;
+using MediaPortal.UI.ContentLists;
+using MediaPortal.UI.Presentation.DataObjects;
+using System.Threading.Tasks;
 
 namespace Webradio.MediaLists
 {
@@ -45,18 +43,6 @@ namespace Webradio.MediaLists
     public ItemsList AllItems => _allItems;
 
     public abstract Task<bool> UpdateItemsAsync(int maxItems, UpdateReason updateReason);
-
-    protected ListItem CreateStreamItem(MyStream stream)
-    {
-      VideoAudioStreamItem item = new VideoAudioStreamItem {AdditionalProperties = { ["Title"] = stream.Title}};
-      item.Language = stream.Language;
-      item.AudioEncoding = "128";
-
-      //var item = new ListItem { AdditionalProperties = { ["StreamUrl"] = stream.StreamUrls[0].StreamUrl } };
-      //item.SetLabel("Name", stream.Title);
-      return item;
-    }
-
 
     protected async Task<UsageStatistics> GetSiteStats()
     {
