@@ -10,7 +10,9 @@
   <!-- ################################################################# -->
   <!-- ###################   WEB RADIO OSD   ########################### -->
   <!-- ################################################################# -->
-    
+
+  <Model x:Key="SkinSettingsModel" Id="13961014-16C4-4361-9751-8E2C585EFD44"/>
+  
   <Style x:Key="OSDWebRadioContainer" TargetType="{x:Type Control}">
     <Setter Property="Template">
       <Setter.Value>
@@ -336,7 +338,8 @@
               <Binding>
                 <Binding.Source>
                   <ItemsPanelTemplate>
-                    <AnimatedStackPanel x:Name="ListItemsHost" IsItemsHost="True" ScrollMargin="130,130" Margin="0,-10,0,-40">
+                    <AnimatedStackPanel x:Name="ListItemsHost" IsItemsHost="True" ScrollMargin="130,130" Margin="0,-10,0,-40"
+                                        LoopScroll="{Binding Source={StaticResource SkinSettingsModel}, Path=[Nereus].EnableLoopScrolling}">
                       <AnimatedStackPanel.Resources>
                         <Storyboard x:Key="ScrollAnimation" FillBehavior="HoldEnd">
                           <DoubleAnimation BeginTime="00:00:00" From="0" To="1" Duration="00:00:00.300" 
@@ -358,7 +361,8 @@
               <Binding>
                 <Binding.Source>
                   <ItemsPanelTemplate>
-                    <AnimatedWrapPanel x:Name="GridItemsHost" IsItemsHost="True" Orientation="Horizontal" ScrollMargin="400,400" Margin="50,-270,0,-305">
+                    <AnimatedWrapPanel x:Name="GridItemsHost" IsItemsHost="True" Orientation="Horizontal" ScrollMargin="400,400" Margin="50,-270,0,-305"
+                                       LoopScroll="{Binding Source={StaticResource SkinSettingsModel}, Path=[Nereus].EnableLoopScrolling}">
                       <AnimatedWrapPanel.Resources>
                         <Storyboard x:Key="ScrollAnimation" FillBehavior="HoldEnd">
                           <DoubleAnimation BeginTime="00:00:00" From="0" To="1" Duration="00:00:00.400" 
