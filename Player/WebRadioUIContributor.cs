@@ -22,6 +22,7 @@
 
 #endregion
 
+using System;
 using System.Timers;
 using MediaPortal.Common;
 using MediaPortal.Common.General;
@@ -202,10 +203,13 @@ namespace Webradio.Player
 
               if (TInfo.ArtistBackgrounds.Count > 0)
               {
-                var fanArtBgModel = (FanArtBackgroundModel)ServiceRegistration.Get<IWorkflowManager>().GetModel(FanArtBackgroundModel.FANART_MODEL_ID);
+                var fanArtBgModel = (FanArtBackgroundModel)ServiceRegistration.Get<IWorkflowManager>()
+                  .GetModel(FanArtBackgroundModel.FANART_MODEL_ID);
                 if (fanArtBgModel == null) return;
                 var uriSource = TInfo.ArtistBackgrounds[0];
-                fanArtBgModel.ImageSource = uriSource != "" ? new MultiImageSource { UriSource = uriSource } : new MultiImageSource { UriSource = null };
+                fanArtBgModel.ImageSource = uriSource != ""
+                  ? new MultiImageSource { UriSource = uriSource }
+                  : new MultiImageSource { UriSource = null };
               }
               else
               {
@@ -227,6 +231,10 @@ namespace Webradio.Player
         CurrentStreamLogo = string.Empty;
         Listeners = string.Empty;
         ClearFanart();
+      }
+      catch (Exception ex)
+      {
+        ServiceRegistration.Get<ILogger>().Warn("WebRadioUIContributor: Error updating properties.", ex);
       }
       finally
       {
