@@ -27,6 +27,7 @@ using MediaPortal.Common.UserManagement;
 using MediaPortal.Common.UserProfileDataManagement;
 using MediaPortal.UI.ContentLists;
 using MediaPortal.UI.Presentation.DataObjects;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Webradio.MediaLists
@@ -42,7 +43,7 @@ namespace Webradio.MediaLists
 
     public ItemsList AllItems => _allItems;
 
-    public abstract Task<bool> UpdateItemsAsync(int maxItems, UpdateReason updateReason);
+    public abstract Task<bool> UpdateItemsAsync(int maxItems, UpdateReason updateReason, ICollection<object> updatedObjects);
 
     protected async Task<UsageStatistics> GetSiteStats()
     {

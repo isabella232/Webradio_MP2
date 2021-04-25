@@ -36,7 +36,7 @@ namespace Webradio.MediaLists
   public abstract class BaseLastPlayedStreamMediaListProvider : WebradioMediaListProviderBase
   {
 
-    public override async Task<bool> UpdateItemsAsync(int maxItems, UpdateReason updateReason)
+    public override async Task<bool> UpdateItemsAsync(int maxItems, UpdateReason updateReason, ICollection<object> updatedObjects)
     {
       if (!updateReason.HasFlag(UpdateReason.Forced) && !updateReason.HasFlag(UpdateReason.PlaybackComplete) && !updateReason.HasFlag(UpdateReason.UserChanged))
         return true;
