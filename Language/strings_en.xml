@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
+  <string name="Webradio.Helptext">Stream your favorite radio channels online from all over the world</string>
   <string name="Webradio.MenuEntry">Webradio</string>
   <string name="Webradio.StateDisplayLabel">Webradio</string>
   <string name="Webradio.Home.ScreenTitle">Webradio</string>

@@ -9,7 +9,8 @@
                               SortOrder="a"
                               SourceStates="7F702D9C-F2DD-42da-9ED8-0BA92F07787F"
                               TargetState="263FADFE-87BE-4563-83F0-E62707891E1B"
-                              DisplayTitle="[Webradio.MenuEntry]" />
+                              DisplayTitle="[Webradio.MenuEntry]" 
+			      HelpText="[Webradio.Helptext]"/>
 
     <!--                  Entrys in Homescreen                    -->
     <PushNavigationTransition Id="76A060DF-0379-431D-A497-AB49B7C37F4E"
